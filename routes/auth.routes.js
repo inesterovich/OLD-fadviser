@@ -57,6 +57,7 @@ router.post(
      check('password', 'You forget to enter a password').exists()],
     async (req, res) => {
         try {
+            
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {

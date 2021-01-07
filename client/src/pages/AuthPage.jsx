@@ -1,6 +1,41 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
+import { useHttp } from '../hooks/http.hook.jsx';
+import { useMessage } from '../hooks/message.hook.jsx';
 
 export const AuthPage = () => {
+    const message = useMessage();
+    const { loading, error, request, clearError } = useHttp();
+
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    });
+
+    useEffect(() => {
+        message(error);
+        clearError();
+
+     }, [error, message, clearError]);
+
+    const changeHandler = event => {
+        setForm({ ...form, [event.target.name]: event.target.value });
+    }
+
+    const registerHandler = async () => {
+        try {
+            const data = await request('/api/auth/register', 'POST', { ...form });
+            message(data.message);
+        } catch (error) {}
+    }
+
+    const loginHandler = async () => {
+        try {
+            const data = await request('/api/auth/login', 'POST', { ...form });
+            message(data.message);
+        } catch (error) {}
+    }
+
     return (
         <div className="row">
             <div className="col s6 offset-s3">
@@ -19,6 +54,7 @@ export const AuthPage = () => {
                                 id="email"
                                 type="text"
                                 name="email"    
+                                onChange={changeHandler}    
                                 />
                         <label htmlFor="email">Email</label>
                             </div>
@@ -29,6 +65,7 @@ export const AuthPage = () => {
                                 id="password"
                                 type="password"
                                 name="password"
+                                onChange={changeHandler}   
                                 />
                         <label htmlFor="email">Пароль</label>
                         </div>
@@ -39,8 +76,22 @@ export const AuthPage = () => {
 
         </div>
         <div className="card-action">
-                <button className="btn yellow darken-4" style={{marginRight: '1rem'}}>Войти</button>
-                <button className="btn grey lighten-1 black-text">Регистрация</button>
+                        <button
+                            className="btn yellow darken-4"
+                            style={{ marginRight: '1rem' }}
+                            disabled={loading}
+                            onClick={loginHandler}
+
+                        >
+                            Войти
+                            </button>
+                        <button
+                            className="btn grey lighten-1 black-text"
+                            onClick={registerHandler}
+                            disabled={loading}
+                        >
+                            Регистрация
+                            </button>
         </div>
       </div>
             </div>
