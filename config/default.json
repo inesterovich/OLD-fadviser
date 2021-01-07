@@ -1,6 +1,6 @@
 {
     "port": 5000,
     "jwtSecret": "IlyaInvestGrape",
-    "mongoUri": "mongodb+srv://inesterovich:9EN7MeP9PIqsWZoE@cluster0.dche1.mongodb.net/app?retryWrites=true&w=majority",
+    "mongoUri": "mongodb+srv://inesterovich:1928374650@cluster0.dche1.mongodb.net/app?retryWrites=true&w=majority",
     "baseUrl": "http://localhost:5000"
 }

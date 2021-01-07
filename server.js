@@ -1,32 +1,31 @@
 const express = require('express');
-const config = require('config');
-const path = require('path');
 const mongoose = require('mongoose');
+const config = require('config');
 
 const server = express();
 
-server.use(express.json({ extended: true }));
-
 const PORT = config.get('port') || 5000;
+
+server.use('/api/auth', require('./routes/auth.routes'));
+
 
 async function start() {
     try {
-        const mongoUri = config.get('mongoUri');
-
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true, 
+        const MONGO_URI = config.get('mongoUri')
+        mongoose.connect(MONGO_URI, {
+            useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
+            useCreateIndex: true
         })
-
-        
-        server.listen(PORT, () => console.log(`Server started succesfully on port: ${PORT}`))
+    
+        server.listen(5000, () => console.log(`Server has been started on port ${PORT}`));
         
     } catch (error) {
-        console.log(`Server error: ${error.message}. Error catched in ${__filename}`);
+        console.log(`Error: ${error.message}. Error was catched in ${__filename}`);
         process.exit(1);
     }
+
 }
 
-
 start();
+
