@@ -11,9 +11,15 @@ const UserSchema = new Schema({
         type: String,
        required: true, 
     },
+    
     accounts: [{
         type: Types.ObjectId,
         ref: 'Account'
+    }],
+
+    categories: [{
+        type: Types.ObjectId,
+        ref: 'Category'
     }]
 })
 
