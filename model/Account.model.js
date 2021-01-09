@@ -1,5 +1,7 @@
 const { Schema, model, Types } = require('mongoose');
 
+
+// Сюда не помешает дату создания
 const AccountSchema = new Schema({
 
     name: {
