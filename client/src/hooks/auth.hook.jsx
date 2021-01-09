@@ -4,6 +4,7 @@ const storageName = 'userData';
 
 export const useAuth = () => {
     const [token, setToken] = useState(null);
+    const [ready, setReady] = useState(false);
 
     //Вот где-то здесь надо декодировать токен и попробовать проверить его на валидность
     const [userId, setUserId] = useState(null);
@@ -28,12 +29,14 @@ export const useAuth = () => {
 
         if (data && data.token) {
             login(data.token, data.userId);
-        }
+        };
+
+        setReady(true);
 
      }, [login]);
 
 
     return {
-        login, logout, token, userId
+        login, logout, token, userId, ready
     }
 }

@@ -22,9 +22,6 @@ router.post('/createaccount', auth, async (req, res) => {
         const { name, sum } = req.body;
 
         const userId = req.user.userId;
-        if (!sum) {
-            sum = 0;
-        }
     
         const existing = await AccountModel.findOne({ name, owner: userId });
     
@@ -33,8 +30,13 @@ router.post('/createaccount', auth, async (req, res) => {
         }
 
         const account = new AccountModel({ name, sum, owner: userId });
+
+        /* Счет создаваться должен пустым. Если сумма присутствует, то должна создаваться операция нужного вида. Так. Вначале разбираемся с редиректом */
         
         await account.save();
+
+        console.log(account);
+
 
 
     } catch (error) {

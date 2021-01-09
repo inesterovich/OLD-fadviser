@@ -1,22 +1,22 @@
 import React from 'react';
-
+import { ModalCustom } from '../components/Modal.jsx';
 
 export const AccountsList = ({ accounts }) => {
     
-    console.log(accounts);
+    // Вот здесь делаем историю для модалки
+    // Модалку вполне можно вынести отдельным компонентом
 
-    
-
-    if (!accounts.length) {
+    if (accounts === undefined || !accounts.length) {
         return <div className="section">
             <h2>Ваши счета</h2>
             <span className="center"> Нет ни одного счёта</span>
-            <button type="button" className="waves-effect waves-light btn">Создать</button>
+            <ModalCustom />
         </div>
     }
 
     return (
         <div className="section">
+            <h2>Ваши счета</h2>
             <table>
                 <thead>
                     <tr>
