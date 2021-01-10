@@ -35,7 +35,7 @@ router.post('/createaccount', auth, async (req, res) => {
         
         await account.save();
 
-        console.log(account);
+        res.json({ account });
 
 
 

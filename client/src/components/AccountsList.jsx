@@ -47,7 +47,7 @@ export const AccountsList = ({ accounts }) => {
                 </tbody>
             </table>
 
-            <button type="button" className="waves-effect waves-light btn">Создать</button>
+            <ModalCustom />
         </div>
     )
 }

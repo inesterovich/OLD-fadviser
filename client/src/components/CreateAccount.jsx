@@ -1,8 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
-import {useHttp } from '../hooks/http.hook';
+import { useHttp } from '../hooks/http.hook';
+import { useHistory } from 'react-router-dom';
 
 export const CreateAccount = () => {
+
+    const history = useHistory();
+
 
     const { token } = useContext(AuthContext);
 
@@ -29,13 +33,12 @@ export const CreateAccount = () => {
 
     const createHandler = async () => {
         try {
-             await request('/api/secure/createaccount', 'POST', { ...account }, {
+           const data =  await request('/api/secure/createaccount', 'POST', { ...account }, {
                 Authorization: `Bearer ${token}`
             })
-            /* Счет успешно создаётся. Но отбрасывается начальное значение. Получается, при создании счёта надо сразу же создавать первую операцию в нём
-            Также при успешном создании надо редиректать на страницу счетов. 
-            Фронт пока закрываем, скачем на бэк
-            */
+          
+            history.push(`/accounts/${data.account._id}`);
+            history.replace('/dashboard');
             
         } catch (error) {}
        
@@ -58,7 +61,7 @@ export const CreateAccount = () => {
                 <input
                     id="account"
                     type="text"
-                    name="account"
+                    name="name"
                     placeholder={account.name}
                     onChange={changeHandler}
                     required        
