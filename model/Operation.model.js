@@ -7,7 +7,12 @@ const OperationSchema = new Schema({
         default: new Date()
     },
 
-    ammount: {
+    comment: {
+        type: String,
+        required: true,
+    },
+
+    sum: {
         type: Number,
         required: true,
         default: 0

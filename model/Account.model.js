@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
+const OperationModel = require('./Operation.model');
 
 
 // Сюда не помешает дату создания
@@ -25,6 +26,8 @@ const AccountSchema = new Schema({
         ref: 'User'
     }
 })
+
+
 
 
 const AccountModel = model('Account', AccountSchema);
