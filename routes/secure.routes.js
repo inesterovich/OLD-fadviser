@@ -32,46 +32,23 @@ router.post('/createaccount', auth, async (req, res) => {
 
         const account = new AccountModel({ name, owner: userId });
 
-        /* Счет создаваться должен пустым. Если сумма присутствует, то должна создаваться операция нужного вида. Так. Вначале разбираемся с редиректом */
+       
         
-
         if (sum) {
 
             const date = new Date();
             const comment = 'Создание счёта';
-    
-            const operation = new OperationModel({ date, comment, sum, account: account._id });
 
-            await operation.save();
+            const operation = { date, comment, sum, account: account._id };
 
-            const operations = await OperationModel.find({ account: account._id }, 'sum -_id');
+            account.operations.push(operation);
 
-            const mapped = operations.map((item) => item = item.sum);
-            const accountSum = mapped.reduce((sum, current) => sum + current, 0);
+            const accountSum = account.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
 
             account.sum = accountSum;
             
+        
             
-
-            
-          
-            
-
-
-            // По факту, все необходимые данные как только модель отработала
-
-            /* 
-            
-            Я могу 
-
-            1. Создать счёт;
-            2. Создать первую операцию. 
-            3. Сохранить операцию в базе 
-            4. Обновить сумму в счёте;
-            5. Сохранить уже готовый счет
-
-            Интересно, а метод обновления схемы + пре-хук не справится ли?
-            */
             
         }
 

@@ -25,8 +25,8 @@ const OperationSchema = new Schema({
 })
 
 
-const OperationModel = model('Operation', OperationSchema);
-module.exports = OperationModel;
+
+module.exports = OperationSchema;
 
 // Пока в принципе без категории
 // Категории делаются точно так же, как и всё остальное: ссылка на коллекцию и внутренние настройки

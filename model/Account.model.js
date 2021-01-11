@@ -1,5 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
-const OperationModel = require('./Operation.model');
+const OperationSchema = require('./Operation.model');
 
 
 // Сюда не помешает дату создания
@@ -11,10 +11,7 @@ const AccountSchema = new Schema({
         required: true
     },
 
-    operations: [{
-        type: Types.ObjectId,
-        ref: 'Operation',
-    }],
+    operations: [ OperationSchema ],
 
     sum: {
         type: Number,

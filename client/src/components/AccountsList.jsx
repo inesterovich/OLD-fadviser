@@ -1,5 +1,6 @@
 import React from 'react';
 import { ModalCustom } from '../components/Modal.jsx';
+import { Link } from 'react-router-dom';
 
 export const AccountsList = ({ accounts }) => {
     
@@ -13,6 +14,7 @@ export const AccountsList = ({ accounts }) => {
             <ModalCustom />
         </div>
     }
+    // Не круче ли будет здесь всё-таки сообразить контекст?
 
     return (
         <div className="section">
@@ -37,7 +39,11 @@ export const AccountsList = ({ accounts }) => {
                                     <td>{ index + 1 }</td>
                                     <td>{ account.name }</td>
                                     <td>{ account.sum }</td>
-                                    <td>Открыть</td>
+                                    <td><Link to={
+                                        {
+                                            pathname: `/accounts/${account._id}`,
+                                            account: {account}
+                                        }} >Открыть</Link></td>
                                     <td>Удалить</td>
 
                                 </tr>
