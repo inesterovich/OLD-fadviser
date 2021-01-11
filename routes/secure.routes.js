@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const auth = require('../middleware/auth.middleware');
-const AccountModel = require('../model/Account.model');
-const OperationModel = require('../model/Operation.model');
+const AccountSchema = require('../model/Account.model');
+const UserModel = require('../model/User.model');
+const OperationSchema = require('../model/Operation.model');
+const {  model } = require('mongoose');
 
 
 const router = Router();
@@ -23,6 +25,49 @@ router.post('/createaccount', auth, async (req, res) => {
         const { name, sum } = req.body;
 
         const userId = req.user.userId;
+            /* 
+            Ещё раз переписываем. 
+
+            Находим юзера.
+            
+            */
+        const user = await UserModel.findOne({ _id: userId });
+        const accounts = user.accounts;
+        
+        const existing = accounts.find((account) => account.name === name);
+
+        if (existing) {
+            return res.status(401).json({ message: 'У вас уже есть счет с таким названием' });
+        }
+
+        const AccountModel = model('Account', AccountSchema);
+
+        const account = new AccountModel({ name });
+
+        // Вот здесь создаём операцию. 
+
+        if (!sum) {
+            sum = 0;
+        }
+
+        const date = new Date();
+        const comment = `Создание счета: ${name}`;
+        const OperationModel = model('Operation', OperationSchema);
+        const operation = new OperationModel({ date, comment, sum });
+        
+        account.operations.push(operation);
+
+        account.sum = account.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+        accounts.push(account);
+
+        console.log(account);
+
+
+        await user.save();
+
+     return  res.json({account});
+
+        /*
     
         const existing = await AccountModel.findOne({ name, owner: userId });
     
@@ -56,7 +101,7 @@ router.post('/createaccount', auth, async (req, res) => {
 
         res.json({ account });
 
-
+            */
 
     } catch (error) {
         
@@ -74,7 +119,9 @@ router.get('/accounts', auth, async (req, res) => {
 
     try {
         
-        const accounts = await AccountModel.find({ owner: req.user.userId });
+        const user = await UserModel.findOne({ _id: req.user.userId });
+        
+        const accounts = user.accounts;
 
         res.json(accounts); 
     } catch (error) {

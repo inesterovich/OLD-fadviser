@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
+const AccountSchema = require('./Account.model');
 
 const UserSchema = new Schema({
     email: {
@@ -12,10 +13,9 @@ const UserSchema = new Schema({
        required: true, 
     },
     
-    accounts: [{
-        type: Types.ObjectId,
-        ref: 'Account'
-    }],
+    accounts: [
+        AccountSchema
+    ],
 
     categories: [{
         type: Types.ObjectId,

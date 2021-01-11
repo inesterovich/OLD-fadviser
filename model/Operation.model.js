@@ -18,10 +18,6 @@ const OperationSchema = new Schema({
         default: 0
     },
 
-    account: {
-        type: Types.ObjectId,
-        ref: 'Account'
-    }
 })
 
 

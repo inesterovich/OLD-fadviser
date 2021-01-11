@@ -2,6 +2,8 @@ const { Schema, model, Types } = require('mongoose');
 const OperationSchema = require('./Operation.model');
 
 
+
+
 // Сюда не помешает дату создания
 const AccountSchema = new Schema({
 
@@ -18,15 +20,12 @@ const AccountSchema = new Schema({
         default: 0, 
     },
 
-    owner: {
-        type: Types.ObjectId,
-        ref: 'User'
-    }
+ 
 })
 
 
 
 
-const AccountModel = model('Account', AccountSchema);
 
-module.exports = AccountModel;
+
+module.exports = AccountSchema;
