@@ -1,17 +1,18 @@
 import React from 'react';
 import { ModalCustom } from '../components/Modal.jsx';
 import { Link } from 'react-router-dom';
+import { CreateAccount } from './CreateAccount.jsx';
 
 export const AccountsList = ({ accounts }) => {
+
+    const component = <CreateAccount />;
     
-    // Вот здесь делаем историю для модалки
-    // Модалку вполне можно вынести отдельным компонентом
 
     if (accounts === undefined || !accounts.length) {
         return <div className="section">
             <h2>Ваши счета</h2>
             <span className="center"> Нет ни одного счёта</span>
-            <ModalCustom />
+            <ModalCustom data={ {name: 'Создать счёт', component}} />
         </div>
     }
     // Не круче ли будет здесь всё-таки сообразить контекст?
@@ -21,13 +22,16 @@ export const AccountsList = ({ accounts }) => {
             <h2>Ваши счета</h2>
             <table>
                 <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Название счета</th>
-                        <th>Остаток</th>
-                        <th>Открыть</th>
-                        <th>Удалить</th>
-                    </tr>
+                        
+                        <tr>
+                            <th>№</th>
+                            <th>Название счета</th>
+                            <th>Остаток</th>
+                            <th>Открыть</th>
+                            <th>Удалить</th>
+                        </tr>
+                    
+
                 </thead>
                 <tbody>
               
@@ -53,7 +57,7 @@ export const AccountsList = ({ accounts }) => {
                 </tbody>
             </table>
 
-            <ModalCustom />
+            <ModalCustom data={ {name: 'Создать счёт', component}} />
         </div>
     )
 }

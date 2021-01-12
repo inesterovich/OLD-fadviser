@@ -46,9 +46,6 @@ router.post('/createaccount', auth, async (req, res) => {
 
         // Вот здесь создаём операцию. 
 
-        if (!sum) {
-            sum = 0;
-        }
 
         const date = new Date();
         const comment = `Создание счета: ${name}`;
@@ -60,52 +57,20 @@ router.post('/createaccount', auth, async (req, res) => {
         account.sum = account.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
         accounts.push(account);
 
-        console.log(account);
+       /*  Пре-хук операции мне не поможет. А пре-хук аккаунта? 
+       Вот есть у меня массив операций. Добавил первую операцию
+       
+       */
 
 
         await user.save();
 
      return  res.json({account});
 
-        /*
-    
-        const existing = await AccountModel.findOne({ name, owner: userId });
-    
-        if (existing) {
-            return res.status(401).json({ message: 'У вас уже есть счет с таким названием' });
-        }
-
-        const account = new AccountModel({ name, owner: userId });
-
-       
-        
-        if (sum) {
-
-            const date = new Date();
-            const comment = 'Создание счёта';
-
-            const operation = { date, comment, sum, account: account._id };
-
-            account.operations.push(operation);
-
-            const accountSum = account.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
-
-            account.sum = accountSum;
-            
-        
-            
-            
-        }
-
-        await account.save();
-
-        res.json({ account });
-
-            */
 
     } catch (error) {
         
-        res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, route create` });
+        res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, line ${error.lineno}` });
     }
 
 
@@ -129,10 +94,49 @@ router.get('/accounts', auth, async (req, res) => {
     }
 })
 
-router.get('/:id', auth,  (req, res) => {
-// Детальная информация о счёте
-})
 
+router.post('/accounts/:id', auth, async (req, res) => {
+
+try {
+    const accountId = req.params.id;
+    const userId = req.user.userId;
+
+    const user = await UserModel.findOne({ _id: userId });
+    const accounts = user.accounts;
+    
+    const currentAccount = accounts.find((account) => String(account._id) === accountId);
+
+    const { date, comment, sum } = req.body;
+
+    const OperationModel = model('Operation', OperationSchema);
+    const operation = new OperationModel({ date, comment, sum });
+
+    
+    currentAccount.operations.push(operation);
+
+    currentAccount.sum = currentAccount.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+
+    /*
+    Добавлять операции умеем. Теперь нужна 
+    1. Правильная переадрессация
+    2. Изменение операции
+    3. Сортировка по дате (именно для этого полная дата нужна)
+    4. Обновление суммы
+    5. Удаление операции
+
+
+    Как я это хочу сделать. 
+
+    
+    */
+
+    await user.save();
+
+    res.json(currentAccount)
+} catch (error) {
+    res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, line ${error.lineno}` });
+}
+})
 
 
 

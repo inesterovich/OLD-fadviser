@@ -2,10 +2,13 @@ import React, { useCallback, useContext, useState, useEffect } from 'react';
 import { useHttp } from '../hooks/http.hook.jsx';
 import { AuthContext } from '../context/AuthContext';
 import { AccountsList } from '../components/AccountsList.jsx';
-import { Loader } from '../components/Loader.jsx';
+import { Loader } from '../components/Loader.jsx'; 
+import { utils } from '../utils';
 
 
 export const Dashboard = () => {
+
+    const { storage } = utils;
  
    const [accounts, setAccounts] = useState();
    const {loading, request } = useHttp();
@@ -18,9 +21,11 @@ export const Dashboard = () => {
            });
            setAccounts(fetched); 
 
+           storage.set('userAccounts', fetched);
+
        } catch (error) {}
 
-   }, [token, request])
+   }, [request, token, storage])
 
    useEffect(() => {
        fetchAccounts();

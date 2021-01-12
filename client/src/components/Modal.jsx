@@ -1,19 +1,26 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 // eslint-disable-next-line no-unused-vars
-import { Modal, Button, Icon } from 'react-materialize';
-import { CreateAccount } from './CreateAccount.jsx';
+import { Modal, Button } from 'react-materialize';
 
 
-export const ModalCustom = () => {
-  const trigger = <Button>Создать счет</Button>
+
+export const ModalCustom = ({ data }) => {
+
+  const { name, component } = data;
+
+
+  const trigger = <Button>{`${name}`} </Button>
   
  
-    // Триггер можно нарисовать прямо внутри скобок вообще-то. 
+  /* Этот компонент должен брать:
+  1. Название триггера;
+  2. Компонент
+  */
 
-    return (
+  return (
 
-    <Modal header="Создание счета" trigger={trigger}>
-      <CreateAccount />
+    <Modal header={name} trigger={trigger}>
+     {component}
   </Modal>
     )
 }

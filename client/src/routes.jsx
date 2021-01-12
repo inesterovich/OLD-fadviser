@@ -5,6 +5,7 @@ import { Dashboard } from './pages/Dashboard.jsx';
 
 import { Account } from './pages/Account.jsx';
 import { Profile } from './pages/Profile.jsx';
+import { Loading } from './pages/Loading.jsx';
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -20,6 +21,10 @@ export const useRoutes = isAuthenticated => {
 
                 <Route path="/accounts/:id" >
                   <Account/>
+                </Route>
+
+                <Route path="/loading" exact>
+                <Loading />
                 </Route>
 
                 <Redirect to="/dashboard"/>

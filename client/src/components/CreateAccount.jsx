@@ -33,11 +33,11 @@ export const CreateAccount = () => {
 
     const createHandler = async () => {
         try {
-           const data =  await request('/api/secure/createaccount', 'POST', { ...account }, {
+            await request('/api/secure/createaccount', 'POST', { ...account }, {
                 Authorization: `Bearer ${token}`
             })
           
-            history.push(`/accounts/${data.account._id}`);
+            history.push(`/loading`);
             history.replace('/dashboard');
             
         } catch (error) {}
@@ -47,11 +47,6 @@ export const CreateAccount = () => {
 
    
     
-    /* Модалка на минималках готова. 
-
-    Отправляем запрос серверу, правим все ошибки, которые возникнут вот тут
-    */
-
  
     return (
 
