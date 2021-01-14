@@ -2,8 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory } from 'react-router-dom';
+import { Button, Modal } from 'react-materialize';
 
 export const CreateAccount = () => {
+  
 
     const history = useHistory();
 
@@ -43,10 +45,48 @@ export const CreateAccount = () => {
         } catch (error) {}
        
     }
+
+    const trigger = <Button> Создать счёт </Button>
+
+
+    const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
+    const submit = <Button modal="close"  className="btn grey lighten-1 black-text" onClick={createHandler} >Отправить</Button>;
     
 
+    return (
+        <Modal header="Создать аккаунт" trigger={trigger} actions={[
+         
+            submit, cancelButton
+          ]}>
+            <div className="input-field">
+                <input
+                    id="account"
+                    type="text"
+                    name="name"
+                    placeholder={account.name}
+                    onChange={changeHandler}
+                    required        
+                />
+            <label htmlFor="account">Название счета</label>
+            </div>
+
+            <div className="input-field">
+                <input
+                    id="sum"
+                    type="number"
+                    name="sum"
+                    placeholder={account.sum}
+                    onChange={changeHandler}
+                    min="0"
+                />
+                
+                <label htmlFor="sum">Текущий остаток на счёте</label>
+            </div>
+      </Modal>
+        
+    )
    
-    
+    /*
  
     return (
 
@@ -88,6 +128,6 @@ export const CreateAccount = () => {
             </div>
         </>
         
-    )
+    ) */
 }
 

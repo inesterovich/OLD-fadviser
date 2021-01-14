@@ -3,13 +3,14 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
+import { Modal, Button } from 'react-materialize';
 
 
 
 
 export const EditOperation = ({operationId, date, category, sum, commentId}) => {
 
-    // Нам нужно будет id счета
+ 
     const { storage } = utils;
 
     const history = useHistory();
@@ -33,11 +34,6 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
                 : event.target.value})
     }
 
-    //Переделываем на нормальные модалки. А что мне не нравится? А фиг знает, как туда текущее значение прокидывать. Хотя. 
-
-    /* Нужен какой-то валидатор даты.  */
-
-  
 
     const updateHandler = async () => {
         try {
@@ -71,13 +67,20 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
         window.M.updateTextFields();
     }, []);
 
+    const trigger = <Button> Изменить </Button>
+    const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={updateHandler} >Сохранить</Button>;
+    const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
+
 
   
 
 
     return (
 
-        <>
+        <Modal header="Изменение операции" trigger={trigger} actions={[
+         
+            submit, cancelButton
+          ]}>
             <div className="input-field">
                 <input
                     id={date ? `date${commentId}`: 'date'}
@@ -117,16 +120,7 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
                 <label htmlFor="sum">Сумма операции</label>
             </div>
 
-            <div className="card-action">
-                    <button
-                        className="btn grey lighten-1 black-text"
-                        type="button"
-                        onClick={updateHandler}
-                    >
-                       Изменить
-                    </button>
-            </div>
-        </>
+        </Modal>
         
     )
 }

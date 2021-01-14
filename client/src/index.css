@@ -9,5 +9,11 @@ input[type=text]:not(.browser-default):focus:not([readonly]), input[type=passwor
   input[type=password]:not(.browser-default):focus:not([readonly]) + label {
     color: #ffffff!important;
   }
+
+
+  div.modal .modal-footer {
+    display: flex;
+    justify-content: space-around;
+  }
   
  

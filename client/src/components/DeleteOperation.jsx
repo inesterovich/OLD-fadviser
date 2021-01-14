@@ -3,6 +3,7 @@ import { utils } from '../utils';
 import { useHistory, useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook.jsx';
+import { Modal, Button  } from 'react-materialize';
 
 
 export const DeleteOperation = ({ operationId }) => {
@@ -15,7 +16,7 @@ export const DeleteOperation = ({ operationId }) => {
     const { token } = useContext(AuthContext);
     const { request } = useHttp();
 
-/* Что мне надо передать-то, какие именно данные?  */
+
     
     const deleteHandler = async () => {
         const body = {
@@ -45,20 +46,20 @@ export const DeleteOperation = ({ operationId }) => {
         window.M.updateTextFields();
     }, []);
 
+    const trigger = <Button> Удалить </Button>
+    const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={deleteHandler} >Да</Button>;
+    const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Нет</Button>;
+
 
 
     
     return (
-        <>
-         <button
-                className="btn grey lighten-1 black-text"
-                type="button"
-                onClick={deleteHandler}
-                    >
-                       Да
-                    </button>
-        
-        </>
+        <Modal header="Удалить операцию?" trigger={trigger} actions={[
+         
+            submit, cancelButton
+          ]}>
+      
+      </Modal>
     )
 
 

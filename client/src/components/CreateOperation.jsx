@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
+import { Modal, Button } from 'react-materialize';
 
 
 export const CreateOperation = () => {
@@ -64,10 +65,17 @@ export const CreateOperation = () => {
     
     Вариант посложнее - куда-нибудь вынести все хендлеры в одну папочку и доставать при необходимости. 
     */
+    
+   const trigger = <Button> Новая операция </Button>
+   const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
+   const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
 
     return (
 
-        <>
+        <Modal header="Новая операция" trigger={trigger} actions={[
+         
+            submit, cancelButton
+          ]}>
             <div className="input-field">
                 <input
                     id="date"
@@ -104,16 +112,8 @@ export const CreateOperation = () => {
                 <label htmlFor="sum">Сумма операции</label>
             </div>
 
-            <div className="card-action">
-                    <button
-                        className="btn grey lighten-1 black-text"
-                        type="button"
-                        onClick={createHandler}
-                    >
-                        Добавить операцию
-                    </button>
-            </div>
-        </>
+       
+        </Modal>
         
     )
 }

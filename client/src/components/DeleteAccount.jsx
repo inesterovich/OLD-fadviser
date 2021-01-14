@@ -1,17 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import { utils } from '../utils';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook.jsx';
+import { Modal, Button  } from 'react-materialize';
 
 
 export const DeleteAccount = ({accountId}) => {
 
-   
-    const { storage } = utils;
-
     const history = useHistory();
-    
     const { token } = useContext(AuthContext);
     const { request } = useHttp();
 
@@ -23,17 +19,10 @@ export const DeleteAccount = ({accountId}) => {
         };
 
 
-        const currentAccount = await request(`/api/secure/accounts/${accountId}`, 'POST', body, {
+         await request(`/api/secure/accounts/${accountId}`, 'POST', body, {
             Authorization: `Bearer ${token}`
         });
 
-     //   const accounts = storage.get('userAccounts', null);
-       // let index = accounts.findIndex((item) => item._id === accountId);
-
-        //accounts[index].operations = currentAccount.operations;
-        // accounts[index].sum = currentAccount.sum;
-        
-        //storage.set('userAccounts', accounts);
 
         history.push(`/loading`);
         history.replace(`/dashboard`);
@@ -44,21 +33,23 @@ export const DeleteAccount = ({accountId}) => {
         window.M.updateTextFields();
     }, []);
 
+    const trigger = <Button> Удалить </Button>
+    const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={deleteHandler} >Да</Button>;
+    const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Нет</Button>;
 
 
-    
+
     return (
-        
-         <button
-                className="btn grey lighten-1 black-text"
-                type="button"
-                onClick={deleteHandler}
-                    >
-                       Да
-                    </button>
-        
-        
+        <Modal header="Удалить счёт?" trigger={trigger} actions={[
+         
+            submit, cancelButton
+          ]}>
+      
+      </Modal>
+
     )
+
+
 
 
   
