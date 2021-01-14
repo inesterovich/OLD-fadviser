@@ -5,7 +5,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
 
 
-export const CreateOperation = () => {
+
+
+export const EditOperation = ({operationId, date, category, sum, commentId}) => {
 
     // Нам нужно будет id счета
     const { storage } = utils;
@@ -16,34 +18,45 @@ export const CreateOperation = () => {
     const { request} = useHttp();
 
     const [operation, setOperation] = useState({
-        date: '',
-        comment: '',
-        sum: 0,
+        date,
+        comment: category,
+        sum,
     })
 
+    // Получается, мне нужно передавать сюда больше данных - 
+
     const changeHandler = event => {
+        console.log(date);
         setOperation({...operation, [event.target.name]:
             event.target.type === 'number' ?
                 Number(event.target.value)
                 : event.target.value})
     }
 
+    //Переделываем на нормальные модалки. А что мне не нравится? А фиг знает, как туда текущее значение прокидывать. Хотя. 
+
+    /* Нужен какой-то валидатор даты.  */
+
   
 
-    const createHandler = async () => {
+    const updateHandler = async () => {
         try {
-           const currentAccount = await request(`/api/secure/accounts/${accountId}`, 'POST', { ...operation, type: 'add operation'}, {
+           const currentAccount = await request(`/api/secure/accounts/${accountId}`, 'POST', { ...operation, type: 'edit operation', operationId}, {
                 Authorization: `Bearer ${token}`
            })
             
+            /* В первую очередь я хочу, чтобы модалка у меня в принципе открывалась
+            Затем мне нужно, чтобы форма заполнялась моими данными. 
+            */
+            
 
-           const accounts = storage.get('userAccounts', null);
-            let index = accounts.findIndex((item) => item._id === accountId);
+          const accounts = storage.get('userAccounts', null);
+           let index = accounts.findIndex((item) => item._id === accountId);
 
             accounts[index].operations = currentAccount.operations;
             accounts[index].sum = currentAccount.sum;
             
-            storage.set('userAccounts', accounts);
+           storage.set('userAccounts', accounts);
 
             history.push(`/loading`);
             history.replace(`/accounts/${accountId}`);
@@ -52,43 +65,43 @@ export const CreateOperation = () => {
        
     }
 
+    
+
     useEffect(() => {
         window.M.updateTextFields();
     }, []);
 
 
   
-// Самый простой способ настраивать модалку как я хочу, возращать уже настроенные компонент с модалкой
-    
-    /* Оборачивать здесь - тогда пусть и повторений дофига, но хоть по человечески кнопки настроить можно
-    
-    Вариант посложнее - куда-нибудь вынести все хендлеры в одну папочку и доставать при необходимости. 
-    */
+
 
     return (
 
         <>
             <div className="input-field">
                 <input
-                    id="date"
+                    id={date ? `date${commentId}`: 'date'}
                     type="date"
                     name="date"
                     onChange={changeHandler}
+                    title="Введите новую дату или оставьте как есть"
                     required        
                 />
-            <label htmlFor="date">Введите дату операцмм</label>
+               
+                <label htmlFor={date ? `date${commentId}` : 'date'}>Текущая дата: { operation.date }</label>
             </div>
             
             <div className="input-field">
                 <input
-                    id="comment"
+                    id={commentId ? `comment${commentId}`: 'comment'}
                     type="text"
                     name="comment"
                     placeholder="Введите комментарий"
                     onChange={changeHandler}
+                    defaultValue={category}
                     required        
                 />
-            <label htmlFor="comment">Коментарий</label> 
+            <label htmlFor={commentId ? `comment${commentId}`: 'comment'}>Коментарий</label> 
             </div>
 
             <div className="input-field">
@@ -96,7 +109,7 @@ export const CreateOperation = () => {
                     id="sum"
                     type="number"
                     name="sum"
-                    placeholder={operation.sum}
+                    defaultValue={sum}
                     onChange={changeHandler}
                     
                 />
@@ -108,9 +121,9 @@ export const CreateOperation = () => {
                     <button
                         className="btn grey lighten-1 black-text"
                         type="button"
-                        onClick={createHandler}
+                        onClick={updateHandler}
                     >
-                        Добавить операцию
+                       Изменить
                     </button>
             </div>
         </>

@@ -59,6 +59,8 @@ router.post('/createaccount', auth, async (req, res) => {
 
        /*  Пре-хук операции мне не поможет. А пре-хук аккаунта? 
        Вот есть у меня массив операций. Добавил первую операцию
+
+       При каждом добавлении, изменении, удалении операции надо сортировать список заново
        
        */
 
@@ -70,7 +72,7 @@ router.post('/createaccount', auth, async (req, res) => {
 
     } catch (error) {
         
-        res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, line ${error.lineno}` });
+        res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, rote createaccount` });
     }
 
 
@@ -97,46 +99,97 @@ router.get('/accounts', auth, async (req, res) => {
 
 router.post('/accounts/:id', auth, async (req, res) => {
 
-try {
-    const accountId = req.params.id;
-    const userId = req.user.userId;
+    try {
 
-    const user = await UserModel.findOne({ _id: userId });
-    const accounts = user.accounts;
-    
-    const currentAccount = accounts.find((account) => String(account._id) === accountId);
+        const accountId = req.params.id;
+        const userId = req.user.userId;
 
-    const { date, comment, sum } = req.body;
-
-    const OperationModel = model('Operation', OperationSchema);
-    const operation = new OperationModel({ date, comment, sum });
-
-    
-    currentAccount.operations.push(operation);
-
-    currentAccount.sum = currentAccount.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
-
-    /*
-    Добавлять операции умеем. Теперь нужна 
-    1. Правильная переадрессация
-    2. Изменение операции
-    3. Сортировка по дате (именно для этого полная дата нужна)
-    4. Обновление суммы
-    5. Удаление операции
+        const {date, comment, sum, type, operationId } = req.body;
+        
+        const user = await UserModel.findOne({ _id: userId });
+        const accounts = user.accounts;
+        const currentAccount = accounts.find((account) => String(account._id) === accountId);
+        const OperationModel = model('Operation', OperationSchema);
 
 
-    Как я это хочу сделать. 
+        
+        switch (type) {
+            case 'add operation':
 
-    
-    */
+              
+                
+                const operation = new OperationModel({ date, comment, sum });
+            
+                
+                currentAccount.operations.push(operation);
+            
+                currentAccount.sum = currentAccount.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+            
+                await user.save();
+            
+                res.json(currentAccount);
+                    
+                break;
+            
+            case 'edit operation':
 
-    await user.save();
+                const updateIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
 
-    res.json(currentAccount)
+                const newOperation = new OperationModel({ date, comment, sum });
+
+                currentAccount.operations[updateIndex] = newOperation;
+
+                await user.save()
+
+               // Мне же надо как-то заполнять предыдущими значениями! То есть все данные надо передавать 
+
+                
+                res.json(currentAccount);
+          
+                break;
+            
+            case 'delete operation':
+
+
+                const deleteIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
+
+                
+                currentAccount.operations.splice(deleteIndex, 1);
+
+                await user.save();
+                
+                
+                res.json(currentAccount);
+                
+                break;
+              
+            
+            case 'delete account':
+
+                
+                const deleteAccountIndex = accounts.findIndex((account) => String(account._id) === accountId);
+                    
+                accounts.splice(deleteAccountIndex, 1);
+
+                await user.save();
+                res.json(accounts);
+                break;
+                    
+
+             
+            
+            default:
+
+                res.json('You forget to send a type')
+        }
+   
+
+
 } catch (error) {
-    res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, line ${error.lineno}` });
+    res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, route createoperation` });
 }
 })
+
 
 
 

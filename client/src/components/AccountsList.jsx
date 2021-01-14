@@ -2,10 +2,17 @@ import React from 'react';
 import { ModalCustom } from '../components/Modal.jsx';
 import { Link } from 'react-router-dom';
 import { CreateAccount } from './CreateAccount.jsx';
+import { DeleteAccount } from '../components/DeleteAccount.jsx';
+import { Button, Modal } from 'react-materialize';
 
 export const AccountsList = ({ accounts }) => {
 
+
     const component = <CreateAccount />;
+
+    const delComponent = <DeleteAccount />
+
+
     
 
     if (accounts === undefined || !accounts.length) {
@@ -16,6 +23,7 @@ export const AccountsList = ({ accounts }) => {
         </div>
     }
     // Не круче ли будет здесь всё-таки сообразить контекст?
+    // Добавляем удаление кривым способом и делаем контекст
 
     return (
         <div className="section">
@@ -48,7 +56,32 @@ export const AccountsList = ({ accounts }) => {
                                             pathname: `/accounts/${account._id}`,
                                             account: {account}
                                         }} >Открыть</Link></td>
-                                    <td>Удалить</td>
+                                    <td> 
+                                    <Modal
+                                            trigger={
+                                            <Button
+                                               
+                                            >Удалить
+                                            </Button>
+                                            }
+                                            header="Удалить аккаунт?"
+                                            actions={[
+                                                <Button
+                                                    flat
+                                                    modal="close"
+                                                    node="button"
+                                                    waves="green"
+                                                >Нет
+                                                </Button>
+                                            ]}
+                                        >
+                                            
+                                            <DeleteAccount accountId={account._id} />
+                                            
+                                        </Modal>
+
+
+                                    </td>
 
                                 </tr>
                             )

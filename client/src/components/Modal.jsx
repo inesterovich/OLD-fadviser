@@ -11,11 +11,6 @@ export const ModalCustom = ({ data }) => {
 
   const trigger = <Button>{`${name}`} </Button>
   
- 
-  /* Этот компонент должен брать:
-  1. Название триггера;
-  2. Компонент
-  */
 
   return (
 
