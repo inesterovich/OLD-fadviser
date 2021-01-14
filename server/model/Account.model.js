@@ -25,7 +25,11 @@ AccountSchema.methods.sortOperations = function () {
     // Сортирую поле this.operations по основанию date
 
     try {
-        this.operations.sort((a, b) => a.date > b.date ? 1 : -1);
+
+        const croppedArray = this.operations.slice(1).sort((a, b) => a.date > b.date ? 1 : -1)
+    
+        this.operations = [this.operations[0], ...croppedArray];
+      
     } catch (error) {
         error.message = `Error was catched in sorting method hook, Message: ${error.message}`;
         throw error;
