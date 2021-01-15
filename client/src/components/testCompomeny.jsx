@@ -1,16 +1,16 @@
 import React  from 'react';
 // eslint-disable-next-line no-unused-vars
-import { Modal, Button } from 'react-materialize';
+import { Modal, Button as button } from 'react-materialize';
 
 export const TestModal = (props) => {
 
     
 
-    const trigger = <Button> Открыть окно </Button>
+    const trigger = <a href ="/"  onClick={(event) => event.preventDefault()} > Открыть окно </a>
 
 
-    const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
-    const submit = <Button modal="close"  className="btn grey lighten-1 black-text " >Отправить</Button>;
+    const cancelButton = <button modal="close"  className="btn grey lighten-1 black-text" >Отмена</button>;
+    const submit = <button modal="close"  className="btn grey lighten-1 black-text " >Отправить</button>;
 
 
     return (

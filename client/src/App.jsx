@@ -7,7 +7,10 @@ import { AuthContext } from './context/AuthContext.jsx';
 import { Navbar } from './components/Navbar';
 import { Loader } from './components/Loader.jsx';
 
+
+
 function App() {
+
 
   const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
@@ -24,10 +27,16 @@ function App() {
     }}>
 
       <Router>
-        {isAuthenticated && <Navbar />}
-      <div className="container"> 
+        <header className="header">
+           <Navbar />
+        </header>
+      <main className=" main"> 
       {routes}
-        </div>
+        </main>
+
+        <footer className="footer">
+
+        </footer>
       </Router>
       </AuthContext.Provider>
     
