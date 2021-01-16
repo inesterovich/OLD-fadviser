@@ -6,6 +6,7 @@ import { useAuth } from './hooks/auth.hook.jsx';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Navbar } from './components/Navbar';
 import { Loader } from './components/Loader.jsx';
+import { SideNav } from './components/SideNav.jsx';
 
 
 
@@ -19,6 +20,8 @@ function App() {
   if (!ready) {
     return < Loader />
   }
+
+  // Можно делать нормально aside меню компонент и сюда сегод забирать
   
   
   return (
@@ -30,8 +33,17 @@ function App() {
         <header className="header">
            <Navbar />
         </header>
-      <main className=" main"> 
-      {routes}
+      <main className=" main "> 
+          {isAuthenticated &&
+            <div className=" center-align row">
+            <aside className="col s3">
+              <SideNav />
+            </aside>
+            <section className="col offset-s1 s7">
+              {routes}
+            </section>
+          </div>}
+          {!isAuthenticated && routes}
         </main>
 
         <footer className="footer">

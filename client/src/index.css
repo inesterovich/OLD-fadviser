@@ -67,5 +67,51 @@ li.disabled {
   
   }
 
- 
- 
+  .dashboard {
+    padding-top: 1rem;
+    
+  }
+
+
+  .dashboard.valign-wrapper {
+    flex-wrap: wrap;
+   
+  }
+
+  .link-block {
+    display: block;
+  }
+
+
+a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+  
+
+
+.aside-nav {
+  height: 80vh;
+  margin: 2rem 0;
+  
+
+}
+
+.aside-nav nav {
+  height: 100%;
+
+}
+
+.aside-nav .valign-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  white-space: wrap;
+}
+
+.aside-nav .valign-wrapper li {
+  width: 100%;
+}
+

@@ -7,7 +7,7 @@ import { utils } from '../utils';
 
 
 
-export const Dashboard = () => {
+export const AccountsPage = () => {
 
     const { storage } = utils;
  

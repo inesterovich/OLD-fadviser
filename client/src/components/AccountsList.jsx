@@ -19,7 +19,7 @@ export const AccountsList = ({ accounts }) => {
    
 
     return (
-        <div className="section">
+        <>
             <h2>Ваши счета</h2>
             <table>
                 <thead>
@@ -63,6 +63,6 @@ export const AccountsList = ({ accounts }) => {
             </table>
 
             <CreateAccount />
-        </div>
+        </>
     )
 }

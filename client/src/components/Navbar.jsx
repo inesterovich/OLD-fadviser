@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { Link } from 'react-scroll';
-import { Register } from './Regiter.jsx';
+import { Register } from './Register.jsx';
 import { Login } from './Login.jsx';
 
 const publicPath = process.env.PUBLIC_URL;
@@ -67,20 +67,5 @@ useEffect(() => {
 
   )
 
-  /* 
 
-    return (
-        <nav>
-        <div className="nav-wrapper">
-          <span className="brand-logo">Fadviser</span>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    <li><NavLink to="/dahsboard">Счета</NavLink></li>
-                    <li><NavLink to="/profile">Профиль</NavLink></li>
-                    <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
-          </ul>
-        </div>
-      </nav>
-    )
-
-  */
 }
