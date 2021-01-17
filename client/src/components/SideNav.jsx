@@ -1,59 +1,91 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 
 export const SideNav = () => {
 
-    
-    const clickHandler = (event) => {
-            event.target.closest('.valign-wrapper').childNodes.forEach((link) => link.classList.remove('active'))
-          event.target.closest('li').classList.add('active')
-        
+  
+  
+
+    const linkConstant = {
+        className: 'grey-text text-darken-1',
+        activeClassname: 'active'
     }
 
-    // Я вообще хочу следить за состоянием вложенного элемента
-    
-    
+    const linksConfig = [
+        {
+            to: "/dashboard",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Дашборд',
+        },
+
+        {
+            to: "/accounts",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Учёт финансов',
+        },
+
+        {
+            to: "/budget",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Планирование бюджета',
+        },
+
+        {
+            to: "/debt",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Управление кредитами',
+        },
+
+        {
+            to: "/income-cap",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Калькулятор дохода',
+        },
+
+        {
+            to: "/money-life-converter",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Конвертер жизни',
+        },
+
+        {
+            to: "/reports",
+            className: linkConstant.className,
+            activeClassName: linkConstant.activeClassname,
+            linkText: 'Отчёты',
+        },
+    ]
+
+
+    let location = useLocation()
 
     return (
         <div className="aside-nav">
             <nav className="white">
                 <ul className="valign-wrapper">
-                    <li>
-                        <NavLink to="/dashboard" className="grey-text text-darken-1" activeClassName="active"  onClick={clickHandler} on >
-                            Дашборд
+                    {linksConfig.map((link, index) => {
+                        return (
+                    <li key={index} className={location.pathname === link.to? 'active' : ' '} >
+                        <NavLink
+                                    to={link.to}
+                                    className={index > 1 ? `${link.className} disabled`: link.className}
+                                    activeClassName={link.activeClassName}
+                        >
+                                    {link.linkText}
+                                   
                         </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1">
-                        <NavLink to="/accounts" className="grey-text text-darken-1" activeClassName="active" onClick={clickHandler}>
-                            Учёт финансов
-                        </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1">
-                        <NavLink to="/budget" className="grey-text text-darken-1 disabled" activeClassName="active" onClick={clickHandler}>
-                            Планирование бюджета
-                        </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1" >
-                        <NavLink to="/debt" className="grey-text text-darken-1 disabled"  activeClassName="active" onClick={clickHandler}>
-                            Управление кредитами
-                        </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1" >
-                        <NavLink to="/income-cap" className="grey-text text-darken-1 disabled" activeClassName="active" onClick={clickHandler}>
-                            Калькулятор дохода
-                        </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1">
-                        <NavLink to="/money-life-converter" className="grey-text text-darken-1 disabled" activeClassName="active" onClick={clickHandler}>
-                            Конвертер жизни
-                        </NavLink>
-                    </li>
-                    <li className="grey-text text-darken-1">
-                        <NavLink to="/reports" className="grey-text text-darken-1 disabled" activeClassName="active" onClick={clickHandler}>
-                            Отчёты и Аналитика
-                        </NavLink>
-                    </li>
+                    </li>)
+                    })}
+
+               
+                   
                 </ul>
             </nav>
             <NavLink to="/">
