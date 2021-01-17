@@ -7,11 +7,9 @@ import { BudgetPage } from './pages/BudgetPage.jsx';
 import { DebtPage } from './pages/DebtPage.jsx';
 import { MoneyLifePage } from './pages/MoneyLifePage.jsx'
 import { ReportsPage } from './pages/ReportsPage.jsx';
-
-
-import { Account } from './pages/Account.jsx';
-import { Profile } from './pages/Profile.jsx';
-import { Loading } from './pages/Loading.jsx';
+import { AccountDetail } from './pages/AccountDetail.jsx';
+import { ProfilePage } from './pages/ProfilePage.jsx';
+import { LoadingPage } from './pages/LoadingPage.jsx';
 import { IncomeCapPage } from './pages/IncomeCapPage.jsx';
 
 export const useRoutes = isAuthenticated => {
@@ -28,7 +26,7 @@ export const useRoutes = isAuthenticated => {
                 </Route>
 
                 <Route path="/accounts/:id" >
-                  <Account/>
+                  <AccountDetail/>
                 </Route>
         
 
@@ -55,13 +53,13 @@ export const useRoutes = isAuthenticated => {
                 
 
                 <Route path="/profile" exact>
-                  <Profile/>
+                  <ProfilePage/>
                 </Route>
 
                
 
                 <Route path="/loading" exact>
-                <Loading />
+                <LoadingPage />
                 </Route>
 
                 <Redirect to="/dashboard"/>

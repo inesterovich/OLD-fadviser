@@ -3,12 +3,17 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
-import { Modal, Button } from 'react-materialize';
+import { Modal, Button, DatePicker } from 'react-materialize';
 
 
 export const CreateOperation = () => {
 
-    // Нам нужно будет id счета
+    /*
+    Прикрутить Data Picker. 
+    
+    */
+    
+    
     const { storage } = utils;
 
     const history = useHistory();
@@ -17,12 +22,13 @@ export const CreateOperation = () => {
     const { request} = useHttp();
 
     const [operation, setOperation] = useState({
-        date: '',
+        date: new Date(),
         comment: '',
         sum: 0,
     })
 
     const changeHandler = event => {
+        
         setOperation({...operation, [event.target.name]:
             event.target.type === 'number' ?
                 Number(event.target.value)
@@ -57,34 +63,115 @@ export const CreateOperation = () => {
         window.M.updateTextFields();
     }, []);
 
+    useEffect(() => {
+        window.M.updateTextFields();
+    }, []);
 
-  
-// Самый простой способ настраивать модалку как я хочу, возращать уже настроенные компонент с модалкой
-    
-    /* Оборачивать здесь - тогда пусть и повторений дофига, но хоть по человечески кнопки настроить можно
-    
-    Вариант посложнее - куда-нибудь вынести все хендлеры в одну папочку и доставать при необходимости. 
-    */
+
+
     
    const trigger = <Button> Новая операция </Button>
    const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
-   const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
+    const cancelButton = <Button modal="close" className="btn grey lighten-1 black-text">Отмена</Button>;
+    
 
     return (
 
-        <Modal header="Новая операция" trigger={trigger} actions={[
+        <Modal id="create-operation" className="modal big-modal create-operation" header="Новая операция" trigger={trigger}
+            actions={[
          
             submit, cancelButton
           ]}>
             <div className="input-field">
-                <input
-                    id="date"
-                    type="date"
+                <DatePicker
+                    
+                    id="dateCreate"
                     name="date"
-                    onChange={changeHandler}
-                    required        
+                    options={{
+                        autoClose: false,
+                        defaultDate: operation.date,
+                        setDefaultDate: true,
+                        firstDay: 1,
+                        format: 'dd.mm.yyyy',
+                        i18n: {
+                            cancel: 'Отмена',
+                            done: 'ОК',
+                            clear: 'Очистить',
+                            months: [
+                                'Январь',
+                                'Февраль',
+                                'Март',
+                                'Апрель',
+                                'Май',
+                                'Июнь',
+                                'Июль',
+                                'Август',
+                                'Сентябрь',
+                                'Октябрь',
+                                'Ноябрь',
+                                'Декабрь'
+                            ],
+                            monthsShort: [
+                                'Янв',
+                                'Фев',
+                                'Мар',
+                                'Апр',
+                                'Май',
+                                'Июн',
+                                'Июл',
+                                'Авг',
+                                'Сен',
+                                'Окт',
+                                'Ноя',
+                                'Дек'
+                            ],
+                            
+                            weekdays: [
+                                'Воскресенье',
+                                'Понедельник',
+                                'Вторник',
+                                'Среда',
+                                'Четверг',
+                                'Пятница',
+                                'Суббота'
+                            ],
+                            
+                            weekdaysAbbrev: [
+                                'ВС',
+                                'ПН',
+                                'ВТ',
+                                'СР',
+                                'ЧТ',
+                                'ПТ',
+                                'СБ'
+                            ],
+                            
+                            weekdaysShort: [
+                                'ВС',
+                                'ПН',
+                                'ВТ',
+                                'СР',
+                                'ЧТ',
+                                'ПТ',
+                                'СБ'
+                              ]
+                        },
+
+
+                        onSelect: (newDate) => {
+                            changeHandler({
+                                target: {
+                                    name: 'date',
+                                    value: newDate
+                                }
+                            })
+                        }
+                        
+                    }}
                 />
-            <label htmlFor="date">Введите дату операцмм</label>
+                
+                
+            
             </div>
             
             <div className="input-field">

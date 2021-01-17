@@ -39,7 +39,7 @@ function App() {
             <aside className="col s3">
               <SideNav />
             </aside>
-            <section className="col offset-s1 s7">
+            <section id="module-section" className="col offset-s1 s7">
               {routes}
             </section>
           </div>}

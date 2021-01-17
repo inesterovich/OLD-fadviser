@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
-import { Modal, Button } from 'react-materialize';
+import { Modal, Button, DatePicker } from 'react-materialize';
 
 
 
@@ -24,7 +24,6 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
         sum,
     })
 
-    // Получается, мне нужно передавать сюда больше данных - 
 
     const changeHandler = event => {
         console.log(date);
@@ -72,27 +71,102 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
 
 
-  
+    
 
 
     return (
 
-        <Modal header="Изменение операции" trigger={trigger} actions={[
+        <Modal id={operationId}
+            header="Изменение операции" trigger={trigger} actions={[
          
             submit, cancelButton
-          ]}>
-            <div className="input-field">
-                <input
+        ]}>
+            <DatePicker 
                     id={date ? `date${commentId}`: 'date'}
-                    type="date"
                     name="date"
-                    onChange={changeHandler}
-                    title="Введите новую дату или оставьте как есть"
-                    required        
+                    options={{
+                        autoClose: true,
+                        defaultDate: new Date(date),
+                        setDefaultDate: true,
+                        firstDay: 1,
+                        format: 'dd.mm.yyyy',
+                        i18n: {
+                            cancel: 'Отмена',
+                            done: 'ОК',
+                            clear: 'Очистить',
+                            months: [
+                                'Январь',
+                                'Февраль',
+                                'Март',
+                                'Апрель',
+                                'Май',
+                                'Июнь',
+                                'Июль',
+                                'Август',
+                                'Сентябрь',
+                                'Октябрь',
+                                'Ноябрь',
+                                'Декабрь'
+                            ],
+                            monthsShort: [
+                                'Янв',
+                                'Фев',
+                                'Мар',
+                                'Апр',
+                                'Май',
+                                'Июн',
+                                'Июл',
+                                'Авг',
+                                'Сен',
+                                'Окт',
+                                'Ноя',
+                                'Дек'
+                            ],
+                            
+                            weekdays: [
+                                'Воскресенье',
+                                'Понедельник',
+                                'Вторник',
+                                'Среда',
+                                'Четверг',
+                                'Пятница',
+                                'Суббота'
+                            ],
+                            
+                            weekdaysAbbrev: [
+                                'ВС',
+                                'ПН',
+                                'ВТ',
+                                'СР',
+                                'ЧТ',
+                                'ПТ',
+                                'СБ'
+                            ],
+                            
+                            weekdaysShort: [
+                                'ВС',
+                                'ПН',
+                                'ВТ',
+                                'СР',
+                                'ЧТ',
+                                'ПТ',
+                                'СБ'
+                              ]
+                        },
+
+                        onSelect: (newDate) => {
+                            changeHandler({
+                                target: {
+                                    name: 'date',
+                                    value: newDate
+                                }
+                            })
+                        }
+                        
+                    }}
                 />
-               
-                <label htmlFor={date ? `date${commentId}` : 'date'}>Текущая дата: { operation.date }</label>
-            </div>
+           
+
             
             <div className="input-field">
                 <input

@@ -87,15 +87,25 @@ li.disabled {
   cursor: default;
 }
 
+.modal.big-modal {
+
+  height: 80%;
+}
+
 
 .modal h4 {
   text-align: center;
 }
+
+
+
   .modal .modal-footer {
     display: flex;
     justify-content: space-around;
-    
+    margin-top: 2rem;
+    height: auto !important;
     padding-bottom: 5rem;
+
   
   }
 

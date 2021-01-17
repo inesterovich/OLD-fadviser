@@ -10,7 +10,7 @@ import { EditOperation } from '../components/EditOperation.jsx';
 
 
 
-export const Account = () => {
+export const AccountDetail = () => {
 
     const accountId = useParams().id;
     
@@ -53,7 +53,7 @@ export const Account = () => {
                                 <tr key={operation._id}>
                                     <td>{index + 1 }</td>
                                     <td>{new Date(operation.date).toLocaleDateString() }</td>
-                                    <td>{operation.comment }</td>
+                                    <td>{operation.comment}</td>
                                     <td>{operation.sum > 0 ? operation.sum: '' }</td>
                                     <td>{operation.sum < 0 ? operation.sum: '' }</td>
                                     <td>{index === 0 ? accumulator : accumulator += operation.sum
@@ -61,7 +61,7 @@ export const Account = () => {
                                     <td> 
                                             <EditOperation
                                             operationId={operation._id}
-                                            date={new Date(operation.date).toLocaleDateString()}
+                                            date={new Date(operation.date).toString()}
                                             category={operation.comment}
                                             sum={operation.sum}
                                             commentId = {index+1}
