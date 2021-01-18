@@ -19,7 +19,7 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
     const { request} = useHttp();
 
     const [operation, setOperation] = useState({
-        date,
+        date: new Date(date),
         comment: category,
         sum,
     })
@@ -70,7 +70,7 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
     const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={updateHandler} >Сохранить</Button>;
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
 
-
+// Так-то всё работает, только не отображается почему-то в поле ввода.
     
 
 
@@ -85,8 +85,8 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
                     id={date ? `date${commentId}`: 'date'}
                     name="date"
                     options={{
-                        autoClose: true,
-                        defaultDate: new Date(date),
+                        autoClose: false,
+                        defaultDate: operation.date,
                         setDefaultDate: true,
                         firstDay: 1,
                         format: 'dd.mm.yyyy',
@@ -155,6 +155,8 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
                         },
 
                         onSelect: (newDate) => {
+                            debugger;
+                            
                             changeHandler({
                                 target: {
                                     name: 'date',
