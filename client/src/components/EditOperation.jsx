@@ -4,11 +4,13 @@ import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
 import { Modal, Button, DatePicker } from 'react-materialize';
+import { useMessage } from '../hooks/message.hook.jsx';
 
 
 
-
-export const EditOperation = ({operationId, date, category, sum, commentId}) => {
+export const EditOperation = ({ operationId, date, category, sum, commentId }) => {
+    
+  
 
  
     const { storage } = utils;
@@ -16,7 +18,16 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
     const history = useHistory();
     const accountId = useParams().id;
     const { token } = useContext(AuthContext);
-    const { request} = useHttp();
+    const {request, error, clearError } = useHttp();
+
+    const message = useMessage();
+
+    useEffect(() => {
+        message(error);
+        clearError();
+
+     }, [error, message, clearError]);
+    
 
     const [operation, setOperation] = useState({
         date: new Date(date),
@@ -26,7 +37,6 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
 
 
     const changeHandler = event => {
-        console.log(date);
         setOperation({...operation, [event.target.name]:
             event.target.type === 'number' ?
                 Number(event.target.value)
@@ -70,8 +80,6 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
     const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={updateHandler} >Сохранить</Button>;
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
 
-// Так-то всё работает, только не отображается почему-то в поле ввода.
-    
 
 
     return (
@@ -155,7 +163,6 @@ export const EditOperation = ({operationId, date, category, sum, commentId}) => 
                         },
 
                         onSelect: (newDate) => {
-                            debugger;
                             
                             changeHandler({
                                 target: {

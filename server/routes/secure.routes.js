@@ -3,16 +3,13 @@ const auth = require('../middleware/auth.middleware');
 const AccountSchema = require('../model/Account.model');
 const UserModel = require('../model/User.model');
 const OperationSchema = require('../model/Operation.model');
-const {  model } = require('mongoose');
+const { model } = require('mongoose');
+
+const OperationModel = model('Operation', OperationSchema);
+const AccountModel = model('Account', AccountSchema);
 
 
 const router = Router();
-
-/* Какие ссылки мне 100% нужны?
-    Мне нужна ссылка генерации счета,
-    Ссылка выдающая список счетов
-
-*/
 
 
 // /api/secure/accounts
@@ -25,12 +22,7 @@ router.post('/createaccount', auth, async (req, res) => {
         const { name, sum } = req.body;
 
         const userId = req.user.userId;
-            /* 
-            Ещё раз переписываем. 
-
-            Находим юзера.
-            
-            */
+          
         const user = await UserModel.findOne({ _id: userId });
         const accounts = user.accounts;
         
@@ -40,29 +32,18 @@ router.post('/createaccount', auth, async (req, res) => {
             return res.status(401).json({ message: 'У вас уже есть счет с таким названием' });
         }
 
-        const AccountModel = model('Account', AccountSchema);
 
         const account = new AccountModel({ name });
 
-        // Вот здесь создаём операцию. 
-
-
         const date = new Date();
         const comment = `Создание счета: ${name}`;
-        const OperationModel = model('Operation', OperationSchema);
         const operation = new OperationModel({ date, comment, sum });
         
         account.operations.push(operation);
 
-        account.sum = account.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+        account.updateSum();
         accounts.push(account);
 
-       /*  Пре-хук операции мне не поможет. А пре-хук аккаунта? 
-       Вот есть у меня массив операций. Добавил первую операцию
-
-       При каждом добавлении, изменении, удалении операции надо сортировать список заново
-       
-       */
 
 
         await user.save();
@@ -109,7 +90,7 @@ router.post('/accounts/:id', auth, async (req, res) => {
         const user = await UserModel.findOne({ _id: userId });
         const accounts = user.accounts;
         const currentAccount = accounts.find((account) => String(account._id) === accountId);
-        const OperationModel = model('Operation', OperationSchema);
+        
 
 
         
@@ -124,6 +105,11 @@ router.post('/accounts/:id', auth, async (req, res) => {
                 currentAccount.operations.push(operation);
             
                 currentAccount.sum = currentAccount.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+                
+                
+                currentAccount.sortOperations();
+                currentAccount.updateSum();
+                currentAccount.updateDate();
             
                 await user.save();
             
@@ -134,14 +120,16 @@ router.post('/accounts/:id', auth, async (req, res) => {
             case 'edit operation':
 
                 const updateIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
-
-                const newOperation = new OperationModel({ date, comment, sum });
+            
+                const newOperation = new OperationModel({ date, comment, sum, _id: operationId });
 
                 currentAccount.operations[updateIndex] = newOperation;
 
-                await user.save()
+                currentAccount.sortOperations();
+                currentAccount.updateSum();
+                currentAccount.updateDate(newOperation);
 
-               // Мне же надо как-то заполнять предыдущими значениями! То есть все данные надо передавать 
+                await user.save()
 
                 
                 res.json(currentAccount);
@@ -152,9 +140,9 @@ router.post('/accounts/:id', auth, async (req, res) => {
 
 
                 const deleteIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
-
                 
                 currentAccount.operations.splice(deleteIndex, 1);
+                currentAccount.updateSum();
 
                 await user.save();
                 
@@ -185,8 +173,14 @@ router.post('/accounts/:id', auth, async (req, res) => {
    
 
 
-} catch (error) {
-    res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, route createoperation` });
+    } catch (error) {
+        
+        if (error.message === 'Операция запрещена: дата создания счёта не может быть больше следующей операции.') {
+            res.status(400).json({ message : error.message})
+        } else {
+            res.status(500).json({ message: error.message || `Something went wrong, try again`});
+        }
+        
 }
 })
 

@@ -40,7 +40,7 @@ export const CreateAccount = () => {
             })
           
             history.push(`/loading`);
-            history.replace('/dashboard');
+            history.replace('/accounts');
             
         } catch (error) {}
        

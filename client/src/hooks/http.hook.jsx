@@ -15,7 +15,7 @@ export const useHttp = () => {
             const response = await fetch(url, { method, body, headers });
             const data = await response.json();
 
-            if (!response.ok) {
+            if (!response.ok || response.status === 400) {
                 throw new Error(data.message || `Error with request. Error catcher in ${__filename}`);
 
             }

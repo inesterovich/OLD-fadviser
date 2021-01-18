@@ -29,6 +29,8 @@ AccountSchema.methods.sortOperations = function () {
         const croppedArray = this.operations.slice(1).sort((a, b) => a.date > b.date ? 1 : -1)
     
         this.operations = [this.operations[0], ...croppedArray];
+
+        // return this;
       
     } catch (error) {
         error.message = `Error was catched in sorting method hook, Message: ${error.message}`;
@@ -40,32 +42,38 @@ AccountSchema.methods.sortOperations = function () {
 
 }
 
-AccountSchema.methods.updateSum = function () {
-    // Через map и reduce делаю всё это
+AccountSchema.methods.updateDate = function (editedOperaation) {
+    
+
+    if (this.operations[0].date >= this.operations[1].date) {
+
+        this.operations[0].date = new Date(this.operations[1].date - 1)
+        
+        
+            if (String(editedOperaation._id) === String(this.operations[0]._id)) {
+
+                throw new Error('Операция запрещена: дата создания счёта не может быть больше следующей операции.')
+            } 
+
+            
+        }
+    
+        
+  
+    
    
+
+    /*  
+    При такой логике оно само собой не ломается, но лучше бы предупредить юзера, что "это нельзя делать". Мне, по сути, нужно передавать редактируемую операцию
+
+    Если дата новой операции больше даты следующей операции и это начальная операция - выдать ответ: Операция запрещена
+    */
 }
 
-
-AccountSchema.pre('save', function (next) {
-    // Доступ к тому самому счёту я легко получаю
-    /*
-    2. Обновление суммы счета
-    
-    */
-    
-    try {
-        this.sortOperations();
-        next();
-    } catch (error) {
-        error.message = `Error was catched in sorting method hook, Message: ${error.message}`;
-        throw error;
-    }
-    
-    
-})
-
-
-
+AccountSchema.methods.updateSum = function () {
+    // Через map и reduce делаю всё это
+   this.sum = this.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
+}
 
 
 

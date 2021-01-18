@@ -25,7 +25,7 @@ export const DeleteAccount = ({accountId}) => {
 
 
         history.push(`/loading`);
-        history.replace(`/dashboard`);
+        history.replace(`/accounts`);
         
     }
 

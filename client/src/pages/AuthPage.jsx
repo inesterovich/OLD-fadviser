@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, {  useEffect } from 'react';
-import { useHttp } from '../hooks/http.hook.jsx';
-import { useMessage } from '../hooks/message.hook.jsx';
-import { Icon, Button } from 'react-materialize';
+import React from 'react';
+
+import {  Button } from 'react-materialize';
 
 import accountingImage from '../assets/accounting.jpg';
 import budgetingImage from '../assets/budgeting.png';
@@ -15,18 +14,6 @@ import bigLogo from '../assets/fadviser.svg';
 
 export const AuthPage = () => {
    
-    const message = useMessage();
-    const {  error,  clearError } = useHttp();
-
- 
-
-    useEffect(() => {
-        message(error);
-        clearError();
-
-     }, [error, message, clearError]);
-
- 
 
     return (
         <>

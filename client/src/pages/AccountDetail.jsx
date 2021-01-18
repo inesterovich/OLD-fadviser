@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { utils } from '../utils';
-
 import { CreateOperation } from '../components/CreateOperation.jsx';
 import { DeleteOperation } from '../components/DeleteOperation.jsx';
 import { EditOperation } from '../components/EditOperation.jsx';
@@ -9,8 +8,8 @@ import { EditOperation } from '../components/EditOperation.jsx';
 
 
 
-
 export const AccountDetail = () => {
+
 
     const accountId = useParams().id;
     
@@ -21,8 +20,6 @@ export const AccountDetail = () => {
     const account = accounts.find((item) => item._id === accountId);
 
    
-
-
     
     let accumulator = account.operations[0].sum || 0;
 
@@ -70,7 +67,8 @@ export const AccountDetail = () => {
                                     <td>
                                
                                             <DeleteOperation
-                                                operationId={operation._id}
+                                            operationId={operation._id}
+                                            disabled={index === 0}
                                             />
                                     </td>
                                </tr>

@@ -5,7 +5,11 @@ import { DeleteAccount } from '../components/DeleteAccount.jsx';
 
 
 
+
 export const AccountsList = ({ accounts }) => {
+    
+
+   
 
 
     if (accounts === undefined || !accounts.length) {

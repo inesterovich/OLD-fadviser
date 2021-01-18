@@ -6,7 +6,7 @@ import { useHttp } from '../hooks/http.hook.jsx';
 import { Modal, Button  } from 'react-materialize';
 
 
-export const DeleteOperation = ({ operationId }) => {
+export const DeleteOperation = ({ operationId, disabled = false }) => {
 
    
     const { storage } = utils;
@@ -46,7 +46,7 @@ export const DeleteOperation = ({ operationId }) => {
         window.M.updateTextFields();
     }, []);
 
-    const trigger = <Button> Удалить </Button>
+    const trigger = <Button className={disabled ? 'btn disabled' : 'btn' }> Удалить </Button>
     const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={deleteHandler} >Да</Button>;
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Нет</Button>;
 
