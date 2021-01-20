@@ -6,21 +6,12 @@ const CategorySchema = new Schema({
         required: true
     },
 
-    categoryType: {
-        type: Boolean,
-        required: true
-    },
-
-    owner: {
-        type: Types.ObjectId,
-        ref: 'User'
-    }
+  
 })
 
 
-const CategoryModel = model('Category', CategorySchema);
 
-module.exports = CategoryModel;
+module.exports = CategorySchema;
 
 // А вот список категорий юзеру не надо? По идее надо бы. 
 
