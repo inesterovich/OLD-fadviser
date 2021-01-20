@@ -29,13 +29,14 @@ export const DeleteOperation = ({ operationId, disabled = false }) => {
             Authorization: `Bearer ${token}`
         });
 
-        const accounts = storage.get('userAccounts', null);
+        const accountsData = storage.get('accountsData', null);
+        const accounts = accountsData.accounts;
         let index = accounts.findIndex((item) => item._id === accountId);
 
         accounts[index].operations = currentAccount.operations;
         accounts[index].sum = currentAccount.sum;
-        
-        storage.set('userAccounts', accounts);
+            
+        storage.set('accountsData', accountsData);
 
         history.push(`/loading`);
         history.replace(`/accounts/${accountId}`);

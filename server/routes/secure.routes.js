@@ -36,8 +36,8 @@ router.post('/createaccount', auth, async (req, res) => {
         const account = new AccountModel({ name });
 
         const date = new Date();
-        const comment = `Создание счета: ${name}`;
-        const operation = new OperationModel({ date, comment, sum });
+        const category = `Создание счета: ${name}`;
+        const operation = new OperationModel({ date, category, sum });
         
         account.operations.push(operation);
 
@@ -70,8 +70,9 @@ router.get('/accounts', auth, async (req, res) => {
         const user = await UserModel.findOne({ _id: req.user.userId });
         
         const accounts = user.accounts;
+        const categories = user.categories;
 
-        res.json(accounts); 
+        res.json({accounts, categories}); 
     } catch (error) {
         res.status(500).json({ message: `${error.message}. Error was catched in ${__filename}, route accounts` });
     }
@@ -85,7 +86,7 @@ router.post('/accounts/:id', auth, async (req, res) => {
         const accountId = req.params.id;
         const userId = req.user.userId;
 
-        const {date, comment, sum, type, operationId } = req.body;
+        const {date, category, sum, type, operationId } = req.body;
         
         const user = await UserModel.findOne({ _id: userId });
         const accounts = user.accounts;
@@ -99,7 +100,7 @@ router.post('/accounts/:id', auth, async (req, res) => {
 
               
                 
-                const operation = new OperationModel({ date, comment, sum });
+                const operation = new OperationModel({ date, category, sum });
             
                 
                 currentAccount.operations.push(operation);
@@ -121,7 +122,7 @@ router.post('/accounts/:id', auth, async (req, res) => {
 
                 const updateIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
             
-                const newOperation = new OperationModel({ date, comment, sum, _id: operationId });
+                const newOperation = new OperationModel({ date, category, sum, _id: operationId });
 
                 currentAccount.operations[updateIndex] = newOperation;
 

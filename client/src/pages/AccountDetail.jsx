@@ -16,7 +16,7 @@ export const AccountDetail = () => {
     
     const { storage } = utils;
 
-    const accounts = storage.get('userAccounts', null);
+    const accounts = storage.get('accountsData', null).accounts;
     const account = accounts.find((item) => item._id === accountId);
 
    
@@ -50,7 +50,7 @@ export const AccountDetail = () => {
                                 <tr key={operation._id}>
                                     <td>{index + 1 }</td>
                                     <td>{new Date(operation.date).toLocaleDateString() }</td>
-                                    <td>{operation.comment}</td>
+                                    <td>{operation.category}</td>
                                     <td>{operation.sum > 0 ? operation.sum: '' }</td>
                                     <td>{operation.sum < 0 ? operation.sum: '' }</td>
                                     <td>{index === 0 ? accumulator : accumulator += operation.sum
@@ -59,7 +59,7 @@ export const AccountDetail = () => {
                                             <EditOperation
                                             operationId={operation._id}
                                             date={new Date(operation.date).toString()}
-                                            category={operation.comment}
+                                            category={operation.category}
                                             sum={operation.sum}
                                             commentId = {index+1}
                                             />

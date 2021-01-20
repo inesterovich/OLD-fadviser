@@ -7,12 +7,6 @@ import { Modal, Button, DatePicker } from 'react-materialize';
 
 
 export const CreateOperation = () => {
-
-    /*
-    Прикрутить Data Picker. 
-    
-    */
-    
     
     const { storage } = utils;
 
@@ -23,7 +17,7 @@ export const CreateOperation = () => {
 
     const [operation, setOperation] = useState({
         date: new Date(),
-        comment: '',
+        category: '',
         sum: 0,
     })
 
@@ -43,14 +37,16 @@ export const CreateOperation = () => {
                 Authorization: `Bearer ${token}`
            })
             
+            
 
-           const accounts = storage.get('userAccounts', null);
+            const accountsData = storage.get('accountsData', null);
+            const accounts = accountsData.accounts;
             let index = accounts.findIndex((item) => item._id === accountId);
 
             accounts[index].operations = currentAccount.operations;
             accounts[index].sum = currentAccount.sum;
             
-            storage.set('userAccounts', accounts);
+            storage.set('accountsData', accountsData);
 
             history.push(`/loading`);
             history.replace(`/accounts/${accountId}`);
@@ -176,14 +172,14 @@ export const CreateOperation = () => {
             
             <div className="input-field">
                 <input
-                    id="comment"
+                    id="category"
                     type="text"
-                    name="comment"
+                    name="category"
                     placeholder="Введите комментарий"
                     onChange={changeHandler}
                     required        
                 />
-            <label htmlFor="comment">Коментарий</label> 
+            <label htmlFor="category">Категория</label> 
             </div>
 
             <div className="input-field">

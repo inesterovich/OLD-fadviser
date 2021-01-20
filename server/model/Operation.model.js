@@ -7,7 +7,7 @@ const OperationSchema = new Schema({
         default: new Date()
     },
 
-    comment: {
+    category: {
         type: String,
         required: true,
     },

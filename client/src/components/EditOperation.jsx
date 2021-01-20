@@ -31,7 +31,7 @@ export const EditOperation = ({ operationId, date, category, sum, commentId }) =
 
     const [operation, setOperation] = useState({
         date: new Date(date),
-        comment: category,
+        category,
         sum,
     })
 
@@ -50,18 +50,14 @@ export const EditOperation = ({ operationId, date, category, sum, commentId }) =
                 Authorization: `Bearer ${token}`
            })
             
-            /* В первую очередь я хочу, чтобы модалка у меня в принципе открывалась
-            Затем мне нужно, чтобы форма заполнялась моими данными. 
-            */
-            
-
-          const accounts = storage.get('userAccounts', null);
+           const accountsData = storage.get('accountsData', null);
+           const accounts = accountsData.accounts;
            let index = accounts.findIndex((item) => item._id === accountId);
 
-            accounts[index].operations = currentAccount.operations;
-            accounts[index].sum = currentAccount.sum;
-            
-           storage.set('userAccounts', accounts);
+           accounts[index].operations = currentAccount.operations;
+           accounts[index].sum = currentAccount.sum;
+           
+           storage.set('accountsData', accountsData);
 
             history.push(`/loading`);
             history.replace(`/accounts/${accountId}`);
@@ -181,13 +177,13 @@ export const EditOperation = ({ operationId, date, category, sum, commentId }) =
                 <input
                     id={commentId ? `comment${commentId}`: 'comment'}
                     type="text"
-                    name="comment"
-                    placeholder="Введите комментарий"
+                    name="category"
+                    placeholder="Выберите категорию"
                     onChange={changeHandler}
                     defaultValue={category}
                     required        
                 />
-            <label htmlFor={commentId ? `comment${commentId}`: 'comment'}>Коментарий</label> 
+            <label htmlFor={commentId ? `comment${commentId}`: 'comment'}>Категория</label> 
             </div>
 
             <div className="input-field">

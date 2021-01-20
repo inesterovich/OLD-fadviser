@@ -13,24 +13,31 @@ export const AccountsPage = () => {
  
    const [accounts, setAccounts] = useState();
    const {loading, request } = useHttp();
-   const { token } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
+    
+    const [categories, setCategories] = useState();
+    
+    
 
-   const fetchAccounts = useCallback(async () => {
-       try {
-           const fetched = await request('/api/secure/accounts', 'GET', null, {
-               Authorization: `Bearer ${token}`
-           });
-           setAccounts(fetched); 
+    const fetchAccountsData = useCallback(async () => {
+        try {
+            const fetched = await request('/api/secure/accounts', 'GET', null, {
+                Authorization: `Bearer ${token}`
+            });
+            setAccounts(fetched.accounts);
+            setCategories(fetched.categories);
 
-           storage.set('userAccounts', fetched);
+            storage.set('accountsData', fetched);
 
-       } catch (error) {}
+        } catch (error) { }
 
-   }, [request, token, storage])
+    }, [request, token, storage]);
+
+
 
    useEffect(() => {
-       fetchAccounts();
-   }, [fetchAccounts]);
+       fetchAccountsData();
+   }, [fetchAccountsData]);
     
     
 
