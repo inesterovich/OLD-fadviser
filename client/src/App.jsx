@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'materialize-css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useRoutes } from './routes.jsx';
@@ -17,9 +17,12 @@ function App() {
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
 
+  
+
   if (!ready) {
     return < Loader />
   }
+  
 
   // Можно делать нормально aside меню компонент и сюда сегод забирать
   

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
@@ -17,17 +17,62 @@ export const CreateOperation = () => {
 
     const [operation, setOperation] = useState({
         date: new Date(),
-        category: '',
+        category: 'Зарплата',
         sum: 0,
     })
 
-    const changeHandler = event => {
-        
+    const [operationType, setOperationType] = useState(true);
+
+    // Определение типа операции готово. Нужно придумать, как запретить с ней что-то делать
+    // Мне нужно добавить атрибут к полю. 
+    /*  Если это доходы, то min = 0,000001
+        Если это расходы, то max = - 0,000001
+
+        А если попробовать сумму записывать строкой и на базе её делать номером?
+    */
+
+    const changeHandler =  useCallback(event => {
+        console.log(event)
+       
+        if (event.target.type === 'select-one') {
+            let type = event.target.selectedOptions[0].dataset.operationtype;
+
+            type === 'income' ? type = true : type = false;
+            setOperationType(type);
+    
+        }
+
+        /*
+
+        if (event.target.id === 'sum') {
+            
+            if (operationType === true) {
+                const sum = event.target.value;
+
+              
+                debugger;
+                if (Number(sum) < 0) {
+                    console.log(sum)
+                    event.target.value = event.target.value.slice(1) || ''
+
+                }
+            
+            }
+        } */
+
+    
         setOperation({...operation, [event.target.name]:
             event.target.type === 'number' ?
                 Number(event.target.value)
                 : event.target.value})
-    }
+    }, [operation])
+    
+    /*
+    useEffect(() => {
+        console.log(operationType);
+        console.log(operation)
+    }, [changeHandler, operationType, operation])
+    */
 
   
 
@@ -59,14 +104,15 @@ export const CreateOperation = () => {
         window.M.updateTextFields();
     }, []);
 
-    useEffect(() => {
-        window.M.updateTextFields();
-    }, []);
 
-
-
+    const SelectInit = () => {
+        
+        const modal = document.getElementById('create-operation');
+        const select = modal.querySelectorAll('select');
+        window.M.FormSelect.init(select, {});
+        }
     
-   const trigger = <Button> Новая операция </Button>
+    const trigger = <Button> Новая операция </Button>
    const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
     const cancelButton = <Button modal="close" className="btn grey lighten-1 black-text">Отмена</Button>;
     
@@ -77,7 +123,13 @@ export const CreateOperation = () => {
             actions={[
          
             submit, cancelButton
-          ]}>
+            ]}
+            options={{
+            onOpenStart: SelectInit,
+            
+        }}
+        
+        >
             <div className="input-field">
                 <DatePicker
                     
@@ -170,17 +222,30 @@ export const CreateOperation = () => {
             
             </div>
             
+            <div></div>
             <div className="input-field">
-                <input
-                    id="category"
-                    type="text"
-                    name="category"
-                    placeholder="Введите комментарий"
-                    onChange={changeHandler}
-                    required        
-                />
-            <label htmlFor="category">Категория</label> 
-            </div>
+                <select name="category" onChange={changeHandler} value={storage.get('accountsData').categories.income[0].name} required>
+                    <optgroup label="Доходы">
+                        {storage.get('accountsData').categories.income.map((object, index) => {
+                            return (
+                                <option key={object._id} value={object.name}
+                                data-operationtype="income"
+                                >{object.name}</option>
+                            )
+                        })}
+                    </optgroup>
+                    <optgroup label="Расходы">
+                    {storage.get('accountsData').categories.expenses.map((object) => {
+                            return (
+                                <option key={object._id} value={object.name}
+                                data-operationtype="expenses"
+                                >{object.name}</option>
+                            )
+                        })}
+                    </optgroup>
+                </select>
+                <label>Категория</label>
+  </div>
 
             <div className="input-field">
                 <input
@@ -189,6 +254,17 @@ export const CreateOperation = () => {
                     name="sum"
                     placeholder={operation.sum}
                     onChange={changeHandler}
+                    min={operationType ? 0 : ''}
+                    onKeyDown={(event) => {
+                        if (operationType && event.key === '-') {
+                            event.preventDefault();
+                            
+                        }
+
+                        // Меньше нуля я убил. А если расходы убиваем? Дописываем минус? И минус 0 тоже выкидываем
+                    }}
+                    
+                    
                     
                 />
                 
