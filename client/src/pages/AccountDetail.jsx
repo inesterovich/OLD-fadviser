@@ -51,9 +51,9 @@ export const AccountDetail = () => {
                                     <td>{index + 1 }</td>
                                     <td>{new Date(operation.date).toLocaleDateString() }</td>
                                     <td>{operation.category}</td>
-                                    <td>{operation.sum > 0 ? operation.sum: '' }</td>
-                                    <td>{operation.sum < 0 ? operation.sum: '' }</td>
-                                    <td>{index === 0 ? accumulator : accumulator += operation.sum
+                                    <td>{operation.sum > 0 ? operation.sum.toFixed(2): '' }</td>
+                                    <td>{operation.sum < 0 ? operation.sum.toFixed(2): '' }</td>
+                                    <td>{index === 0 ? accumulator.toFixed(2) : (accumulator += operation.sum).toFixed(2)
                                     }</td>
                                     <td> 
                                             <EditOperation
@@ -61,7 +61,7 @@ export const AccountDetail = () => {
                                             date={new Date(operation.date).toString()}
                                             category={operation.category}
                                             sum={operation.sum}
-                                            commentId = {index+1}
+                                            categoryId = {index+1}
                                             />
 </td>
                                     <td>

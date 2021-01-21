@@ -4,6 +4,8 @@ import { useHttp } from '../hooks/http.hook';
 import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
 import { Modal, Button, DatePicker } from 'react-materialize';
+import { useMessage } from '../hooks/message.hook.jsx';
+
 
 
 export const CreateOperation = () => {
@@ -23,16 +25,11 @@ export const CreateOperation = () => {
 
     const [operationType, setOperationType] = useState(true);
 
-    // Определение типа операции готово. Нужно придумать, как запретить с ней что-то делать
-    // Мне нужно добавить атрибут к полю. 
-    /*  Если это доходы, то min = 0,000001
-        Если это расходы, то max = - 0,000001
-
-        А если попробовать сумму записывать строкой и на базе её делать номером?
-    */
+    
+    const [validity, setValidity] = useState(true);
+    const message = useMessage();
 
     const changeHandler =  useCallback(event => {
-        console.log(event)
        
         if (event.target.type === 'select-one') {
             let type = event.target.selectedOptions[0].dataset.operationtype;
@@ -41,25 +38,6 @@ export const CreateOperation = () => {
             setOperationType(type);
     
         }
-
-        /*
-
-        if (event.target.id === 'sum') {
-            
-            if (operationType === true) {
-                const sum = event.target.value;
-
-              
-                debugger;
-                if (Number(sum) < 0) {
-                    console.log(sum)
-                    event.target.value = event.target.value.slice(1) || ''
-
-                }
-            
-            }
-        } */
-
     
         setOperation({...operation, [event.target.name]:
             event.target.type === 'number' ?
@@ -67,17 +45,16 @@ export const CreateOperation = () => {
                 : event.target.value})
     }, [operation])
     
-    /*
-    useEffect(() => {
-        console.log(operationType);
-        console.log(operation)
-    }, [changeHandler, operationType, operation])
-    */
-
-  
+   
 
     const createHandler = async () => {
         try {
+
+            if (Number(operation.sum) === 0 || isNaN(Number(operation.sum))) {
+                setValidity(false);
+            } else {
+
+            
            const currentAccount = await request(`/api/secure/accounts/${accountId}`, 'POST', { ...operation, type: 'add operation'}, {
                 Authorization: `Bearer ${token}`
            })
@@ -95,6 +72,15 @@ export const CreateOperation = () => {
 
             history.push(`/loading`);
             history.replace(`/accounts/${accountId}`);
+                
+            if (currentAccount) {
+                const closeModal = document.getElementById('closeCreateOperation');
+                closeModal.click();
+                }
+
+            }
+
+    
             
         } catch (error) {}
        
@@ -103,6 +89,13 @@ export const CreateOperation = () => {
     useEffect(() => {
         window.M.updateTextFields();
     }, []);
+
+    useEffect(() => {
+        if (validity === false) {
+            message('Сумма операции не может быть нулевой');
+            setValidity(true);
+        }
+    }, [validity, message])
 
 
     const SelectInit = () => {
@@ -113,8 +106,8 @@ export const CreateOperation = () => {
         }
     
     const trigger = <Button> Новая операция </Button>
-   const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
-    const cancelButton = <Button modal="close" className="btn grey lighten-1 black-text">Отмена</Button>;
+   const submit = <Button className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
+    const cancelButton = <Button id="closeCreateOperation" modal="close" className="btn grey lighten-1 black-text">Отмена</Button>;
     
 
     return (
@@ -130,6 +123,7 @@ export const CreateOperation = () => {
         }}
         
         >
+
             <div className="input-field">
                 <DatePicker
                     
@@ -222,7 +216,7 @@ export const CreateOperation = () => {
             
             </div>
             
-            <div></div>
+            
             <div className="input-field">
                 <select name="category" onChange={changeHandler} value={storage.get('accountsData').categories.income[0].name} required>
                     <optgroup label="Доходы">
@@ -256,12 +250,33 @@ export const CreateOperation = () => {
                     onChange={changeHandler}
                     min={operationType ? 0 : ''}
                     onKeyDown={(event) => {
+
                         if (operationType && event.key === '-') {
-                            event.preventDefault();
-                            
+                            event.preventDefault(); 
                         }
 
-                        // Меньше нуля я убил. А если расходы убиваем? Дописываем минус? И минус 0 тоже выкидываем
+                        if (!operationType) {
+
+                            if (event.target.value.length === 0 && !isNaN(Number(event.key)) ) {
+                                event.preventDefault();
+                                event.target.value = -event.key;
+                            }
+                            
+                            if (event.target.value.length >= 1 && event.key === '-') {
+                                event.preventDefault();
+                            }
+
+                            if (event.code === "Backspace" && event.target.value.length === 2) {
+                            
+                                if (event.target.value[0] === '-') {
+                                    event.preventDefault();
+                                    event.target.value = '';
+                                }
+                            }
+                           
+                       
+                        }
+
                     }}
                     
                     

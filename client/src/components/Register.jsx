@@ -1,5 +1,4 @@
 import React, { useEffect, useState }  from 'react';
-// eslint-disable-next-line no-unused-vars
 import { Modal, Button } from 'react-materialize';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
@@ -19,7 +18,9 @@ export const Register = () => {
         message(error);
         clearError();
 
-     }, [error, message, clearError]);
+    }, [error, message, clearError]);
+    
+   
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value });
