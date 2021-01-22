@@ -1,8 +1,51 @@
 @import "~materialize-css/dist/css/materialize.min.css";
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0) ;
+    
+  }
+
+  50% {
+    transform: rotate(180deg) ;
+  }
+
+  100% {
+    
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blueToGreen {
+
+  0% {
+    color: blue;
+  }
+
+  50% {
+   
+  }
+
+  100% {
+    color: green;
+  }
+}
+
+@keyframes runAway {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 body {
   background-color: #fbfcff;
 }
+
+
 
 i.medium {
   font-size: 2.5rem;
@@ -206,6 +249,19 @@ footer .container {
 
 footer .course-logo-container img {
   min-width: 100px;
+}
+
+.course-logo-container:hover {
+  animation: 2s 1 rotate;
+}
+
+
+footer .author-name:hover {
+  animation: 5s 1 blueToGreen;
+}
+
+.footer .author-github:hover {
+  animation: 5s 1 runAway;
 }
 
 

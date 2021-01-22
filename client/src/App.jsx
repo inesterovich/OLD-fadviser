@@ -50,8 +50,8 @@ function App() {
             // Сюда надо вставить футер. На проверку - свои данные. В прод - авторское право
             <div className="container">
               <div>
-              <p>Author: Ilya Nesterovich</p>
-              <p><a href="https://github.com/inesterovich/">GitHub</a></p>
+              <p className="author-name">Author: Ilya Nesterovich</p>
+              <p className="author-github"><a href="https://github.com/inesterovich/">GitHub</a></p>
               </div>
 
               <div className="course-logo-container">
