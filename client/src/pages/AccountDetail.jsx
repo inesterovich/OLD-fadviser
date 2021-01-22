@@ -4,6 +4,10 @@ import { utils } from '../utils';
 import { CreateOperation } from '../components/CreateOperation.jsx';
 import { DeleteOperation } from '../components/DeleteOperation.jsx';
 import { EditOperation } from '../components/EditOperation.jsx';
+import { ReactComponent as IncomeIcon } from '../assets/income.svg';
+import { ReactComponent as ExpensesIcon } from '../assets/expenses.svg';
+import { ReactComponent as DeleteIcon } from '../assets/delete-black.svg';
+import {ReactComponent as EditIcon} from '../assets/edit-black.svg';
 
 
 
@@ -26,19 +30,19 @@ export const AccountDetail = () => {
     return (
         
         <div>
-            <h3>{account.name}</h3>
-            <table key={account._id}>
+            <h2>{account.name}</h2>
+            <table key={account._id}  className="center-align">
                 <thead>
 
                     <tr>
                         <th>№</th>
                         <th>Дата</th>
                         <th>Комментарий</th>
-                        <th>Доход</th>
-                        <th>Расход</th>
+                        <th><IncomeIcon title="Доход" /></th>
+                        <th><ExpensesIcon title="Расход" /></th>
                         <th>Остаток</th>
-                        <th>Изменить</th>
-                        <th>Удалить</th>
+                        <th><EditIcon title="Изменить операцию" /></th>
+                        <th><DeleteIcon title="Удалить операцию" /></th>
                     </tr>
                     
                 </thead>
@@ -51,8 +55,8 @@ export const AccountDetail = () => {
                                     <td>{index + 1 }</td>
                                     <td>{new Date(operation.date).toLocaleDateString() }</td>
                                     <td>{operation.category}</td>
-                                    <td>{operation.sum > 0 ? operation.sum.toFixed(2): '' }</td>
-                                    <td>{operation.sum < 0 ? operation.sum.toFixed(2): '' }</td>
+                                    <td className="green-text text-darken-3">{operation.sum > 0 ? operation.sum.toFixed(2): '' }</td>
+                                    <td className="red-text text-darken-3">{operation.sum < 0 ? operation.sum.toFixed(2): '' }</td>
                                     <td>{index === 0 ? accumulator.toFixed(2) : (accumulator += operation.sum).toFixed(2)
                                     }</td>
                                     <td> 

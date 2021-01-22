@@ -15,7 +15,7 @@ margin-top: 1rem;
 
 h3 {
   margin: 0;
-font-size: 2rem;
+font-size: 1.5rem;
 }
 
 
@@ -33,12 +33,12 @@ nav ul {
   margin-right: 3rem;
 }
 
-.dropdown-content {
+nav .dropdown-content {
   top: 65px !important;
   width: 130px !important;
 }
 
-.dropdown-content li.disabled {
+nav .dropdown-content li.disabled {
   padding-left: 16px;
   padding-top: 14px;
 }
@@ -129,11 +129,24 @@ li.disabled {
     
   }
 
+  .active-icon {
+    fill: #212121;
+   
+    cursor: pointer;
+  }
+
+  .disabled-icon {
+    pointer-events: none;
+    fill: #bdbdbd;
+  }
+
 
   .dashboard.valign-wrapper {
     flex-wrap: wrap;
    
   }
+
+  
 
   .link-block {
     display: block;
@@ -144,11 +157,15 @@ a.disabled {
   pointer-events: none;
   opacity: 0.5;
 }
+
+.btn-small.blue.darken-1 {
+  margin-top: 1rem;
+}
   
 
 
 .aside-nav {
-  height: 80vh;
+  height: 70vh;
   margin: 2rem 0 2rem 2rem;
   
   
@@ -175,8 +192,26 @@ a.disabled {
   width: 100%;
 }
 
+footer {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
 
-@media (max-width: 992px) {
+footer .container {
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+footer .course-logo-container img {
+  min-width: 100px;
+}
+
+
+
+
+@media (max-width: 993px) {
 
   .promo-wrapper {
     width: 65%;
@@ -190,6 +225,20 @@ a.disabled {
     font-size: 1.4rem;
     
   }
+
+  .dashboard br {
+    display: none;
+  }
+
+  section table {
+    max-width: 700px;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    word-wrap: none;
+  }
+
 }
 
 
@@ -200,6 +249,13 @@ a.disabled {
     width: 85%;
    
   }
+
+  th, td {
+    padding: 3px;
+    font-size: 0.6rem;
+
+  }
+
 
 
 

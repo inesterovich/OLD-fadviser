@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { utils } from '../utils';
 import { Modal, Button, DatePicker } from 'react-materialize';
 import { useMessage } from '../hooks/message.hook.jsx';
+import {ReactComponent as EditIcon} from '../assets/edit-black.svg';
 
 
 
@@ -116,7 +117,7 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId })
         
     
 
-    const trigger = <Button> Изменить </Button>
+    const trigger = <EditIcon  title="Изменить операцию" className="active-icon" />
     const submit = <Button className="btn grey lighten-1 black-text " onClick={updateHandler} >Сохранить</Button>;
     const cancelButton = <Button modal="close"  id={`closeEditOperation${operationId}`}  className="btn grey lighten-1 black-text">Отмена</Button>;
 

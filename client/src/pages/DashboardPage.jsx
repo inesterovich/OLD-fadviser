@@ -16,19 +16,19 @@ export const DashboardPage = () => {
     return (
         <div className=" dashboard row ">
                            
-            <a href="/accounts" className=" link-block col s4 black-text">
+            <a href="/accounts" className=" link-block col l4 m6 s12 black-text">
                 <div className="card">
                     <div className="card-image">
                         <img src={budgetingImage} alt="Finance accounting" />
                     </div>
                     <div className="card-content">
-                        <h3>Учёт <br /> финансов</h3>
+                        <h3>Учёт <br/> финансов</h3>
                     </div>
                 </div>
                 
             </a>
 
-            <a href="/budget" className=" link-block col s4 black-text disabled">
+            <a href="/budget" className=" link-block col l4 m6 s12 black-text disabled">
                 <div className="card">
                     <div className="card-image">
                         <img src={accountingImage} alt="Budget planiing" />
@@ -40,7 +40,7 @@ export const DashboardPage = () => {
                 
             </a>
 
-            <a href="/debt" className=" link-block col s4 black-text disabled">
+            <a href="/debt" className=" link-block col l4 m6 s12 black-text disabled">
                 <div className="card">
                     <div className="card-image">
                         <img src={loanManagementImage} alt="Debt management" />
@@ -52,7 +52,7 @@ export const DashboardPage = () => {
                 
             </a>
 
-            <a href="/income-cap" className=" link-block col s4 black-text disabled">
+            <a href="/income-cap" className=" link-block col l4 m6 s12 black-text disabled">
                 <div className="card">
                     <div className="card-image">
                         <img src={financialCapImage} alt="Finance cap calculator" />
@@ -64,7 +64,7 @@ export const DashboardPage = () => {
                 
             </a>
 
-            <a href="/money-life-converter" className=" link-block col s4 black-text disabled">
+            <a href="/money-life-converter" className=" link-block col l4 m6 s12 black-text disabled">
                 <div className="card">
                     <div className="card-image">
                         <img src={timeMoneyImage} alt="Money-life converter" />
@@ -76,7 +76,7 @@ export const DashboardPage = () => {
                 
             </a>
 
-            <a href="/reports" className=" link-block col s4 black-text disabled">
+            <a href="/reports" className=" link-block col l4 m6 s12 black-text disabled">
                 <div className="card">
                     <div className="card-image">
                         <img src={reportImage} alt="Reports" />

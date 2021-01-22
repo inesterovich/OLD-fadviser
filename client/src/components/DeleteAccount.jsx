@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useHttp } from '../hooks/http.hook.jsx';
-import { Modal, Button  } from 'react-materialize';
+import { Modal, Button } from 'react-materialize';
+import {ReactComponent as DeleteIcon} from '../assets/delete-black.svg';
 
 
 export const DeleteAccount = ({accountId}) => {
@@ -33,7 +34,7 @@ export const DeleteAccount = ({accountId}) => {
         window.M.updateTextFields();
     }, []);
 
-    const trigger = <Button> Удалить </Button>
+    const trigger = <DeleteIcon  title="Удалить счёт" className="active-icon" />
     const submit = <Button modal="close" className="btn grey lighten-1 black-text " onClick={deleteHandler} >Да</Button>;
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Нет</Button>;
 

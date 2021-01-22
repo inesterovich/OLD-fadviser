@@ -51,24 +51,96 @@ useEffect(() => {
     },
     
   ]
+
+  const asideConfig = [
+    {
+      to: "/dashboard",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Дашборд',
+    },
+
+    {
+      to: "/accounts",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Учёт финансов',
+    },
+
+    {
+      to: "/budget",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Планирование бюджета',
+    },
+
+    {
+      to: "/debt",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Управление кредитами',
+    },
+
+    {
+      to: "/income-cap",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Калькулятор дохода',
+    },
+
+    {
+      to: "/money-life-converter",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Конвертер жизни',
+    },
+
+    {
+      to: "/reports",
+      className: linkConstant.className,
+      activeClassName: linkConstant.activeClassname,
+      linkText: 'Отчёты',
+    },
+  ];
+
+
   
   const location = useLocation();
 
   const dropDownHandler = () => {
     const menu = document.getElementById('topNav');
     const elements = menu.querySelectorAll('.dropdown-trigger');
-    window.M.Dropdown.init(elements, {});
+    if (elements) {
+      window.M.Dropdown.init(elements, {});
+    }
+
+    
     
     
   }
+
+
   
-  if (isAuthenticated) {
-    return (
-      <nav id="topNav" >
-      <div className="nav-wrapper white">
-      <img className="brand-logo" src={logoIcon} alt="Fadviser"/>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            {LinksConfig.map((link, index) => {
+  return (
+    <>
+      <ul id="dropdown-menu" className="dropdown-content center-align">
+        
+        {
+          !isAuthenticated &&
+          <>
+          <li className="grey-text text-lighten-1 disabled">О платформе</li>
+          <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
+            </li>
+          <li><Register /></li>
+          <li><Login /></li>
+          
+          </>
+        }
+
+        {isAuthenticated && <>
+          {
+                // Ссылки меню после авторизации
+                LinksConfig.map((link, index) => {
               return (
                 <li
                   key={link.linkText + index}
@@ -94,42 +166,95 @@ useEffect(() => {
                 
                 </li>
               )
-            })}
-       
-         
-                   
+                })
+          }
+
+          <li className="divider"></li>
+          
+          
+          {asideConfig.map((link, index) => {
+                        return (
+                    <li key={index} className={location.pathname === link.to? 'active' : ' '} >
+                        <NavLink
+                                    to={link.to}
+                                    className={index > 1 ? `${link.className} disabled`: link.className}
+                                    activeClassName={link.activeClassName}
+                        >
+                                    {link.linkText}
+                                   
+                        </NavLink>
+                    </li>)
+          })
+          }
+
+        </>
+
+
+        }
+
       </ul>
-    </div>
-  </nav>
-    )
-  }
-
-  // Никакого sideNav. Делаем dropdowm
-
-  return (
-
-    <>
-       <ul id="dropdown-menu" className="dropdown-content center-align">
-          <li className="grey-text text-lighten-1 disabled">О платформе</li>
-          <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
-            </li>
-          <li><Register /></li>
-          <li><Login /></li>
-        
-      </ul>
 
 
-
-    <nav id="topNav" onLoad={dropDownHandler}>
+      <nav id="topNav" onLoad={dropDownHandler}>
         <div className="nav-wrapper white">
           
-      <img className="brand-logo" src={logoIcon} alt="Fadviser"/>
-        <ul id="nav-large" className="right hide-on-med-and-down">
-          <li className="grey-text text-lighten-1 disabled">О платформе</li>
-          <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
-            </li>
-          <li><Register /></li>
-          <li><Login /></li>
+          <img className="brand-logo" src={logoIcon} alt="Fadviser" />
+          
+          <ul id="nav-large" className="right hide-on-med-and-down">
+            
+            {
+              // Ссылки меню до авторизации
+              !isAuthenticated && 
+            
+              <>
+              <li className="grey-text text-lighten-1 disabled">О платформе
+              </li>
+              <li>
+                <Link to="opportunity-section-header" className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
+              </li>
+              <li><Register /></li>
+              <li><Login /></li>
+            </>
+            }
+
+            {isAuthenticated && 
+              <>
+ 
+              {
+                // Ссылки меню после авторизации
+                LinksConfig.map((link, index) => {
+              return (
+                <li
+                  key={link.linkText + index}
+                  className={location.pathname === link.to ? `${link.className} active` : link.className}
+                >
+                  {link.to !== '/logout' ?
+                    <NavLink
+                      to={link.to}
+                      className={link.className}
+                      activeClassName={link.activeClassName}
+                    >
+                      {link.linkText}
+                    </NavLink>
+                    : <a
+                      href={link.to}
+                      className={link.className}
+                      onClick={logoutHandler}
+                    >
+                      {link.linkText}
+                    </a>
+                  }
+                
+                
+                </li>
+              )
+                })
+              }
+              </>
+
+
+            }
+         
          
           </ul>
           
@@ -138,8 +263,13 @@ useEffect(() => {
           </ul>
     </div>
   </nav>
-    </>
-  )
 
+
+
+    </>
+
+  )
+    
+  
 
 }

@@ -7,7 +7,7 @@ import { AuthContext } from './context/AuthContext.jsx';
 import { Navbar } from './components/Navbar';
 import { Loader } from './components/Loader.jsx';
 import { SideNav } from './components/SideNav.jsx';
-
+import CourseLogo from './assets/rs_school_js.svg';
 
 
 function App() {
@@ -35,20 +35,30 @@ function App() {
       <main className="main"> 
           {isAuthenticated &&
             <div className=" center-align row">
-            <aside className="col l3 s3">
+            <aside className="col l3 hide-on-med-and-down">
               <SideNav />
             </aside>
-            <section id="module-section" className="col offset-s1 l7 s7">
+            <section id="module-section" className="col l7 s10 offset-right-m1 offset-m1 offset-s1">
               {routes}
             </section>
           </div>}
           {!isAuthenticated && routes}
         </main>
 
-        <footer className="footer">
+        <footer className="footer white">
           {
             // Сюда надо вставить футер. На проверку - свои данные. В прод - авторское право
+            <div className="container">
+              <div>
+              <p>Author: Ilya Nesterovich</p>
+              <p><a href="https://github.com/inesterovich/">GitHub</a></p>
+              </div>
 
+              <div className="course-logo-container">
+                <a href="https://rs.school/js/"><img src={CourseLogo } alt="Course Logo"/></a>
+              </div>
+              
+            </div>
           }
         </footer>
       </Router>

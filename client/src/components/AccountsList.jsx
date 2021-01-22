@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CreateAccount } from './CreateAccount.jsx';
 import { DeleteAccount } from '../components/DeleteAccount.jsx';
-
-
+import { ReactComponent as OpenIcon } from '../assets/open.svg';
+import { ReactComponent as IncomeIcon } from '../assets/income.svg';
+import { ReactComponent as ExpensesIcon } from '../assets/expenses.svg';
+import {ReactComponent as DeleteIcon} from '../assets/delete-black.svg';
 
 
 export const AccountsList = ({ accounts }) => {
@@ -32,8 +34,8 @@ export const AccountsList = ({ accounts }) => {
                             <th>№</th>
                             <th>Название счета</th>
                             <th>Остаток</th>
-                            <th>Открыть</th>
-                            <th>Удалить</th>
+                            <th><OpenIcon title="Открыть счёт" /></th>
+                            <th><DeleteIcon title="Удалить счёт" /></th>
                         </tr>
                     
 
@@ -52,10 +54,12 @@ export const AccountsList = ({ accounts }) => {
                                         {
                                             pathname: `/accounts/${account._id}`,
                                             account: {account}
-                                        }} >Открыть</Link></td>
+                                        }} ><OpenIcon title="Открыть" /></Link></td>
                                     <td> 
     
-                                            <DeleteAccount accountId={account._id} />
+                                        <DeleteAccount accountId={account._id} >
+                                        <DeleteIcon title="Удалить счёт" />
+                                        </DeleteAccount>
                                             
                                     </td>
 

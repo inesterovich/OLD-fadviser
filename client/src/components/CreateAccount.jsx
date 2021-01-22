@@ -4,6 +4,9 @@ import { useHttp } from '../hooks/http.hook';
 import { useHistory } from 'react-router-dom';
 import { Button, Modal } from 'react-materialize';
 
+
+
+
 export const CreateAccount = () => {
   
 
@@ -46,7 +49,7 @@ export const CreateAccount = () => {
        
     }
 
-    const trigger = <Button> Создать счёт </Button>
+    const trigger = <Button className="btn-small blue darken-1"> Создать счёт </Button>
 
 
     const cancelButton = <Button  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
@@ -86,48 +89,6 @@ export const CreateAccount = () => {
         
     )
    
-    /*
  
-    return (
-
-        <>
-            
-            <div className="input-field">
-                <input
-                    id="account"
-                    type="text"
-                    name="name"
-                    placeholder={account.name}
-                    onChange={changeHandler}
-                    required        
-                />
-            <label htmlFor="account">Название счета</label>
-            </div>
-
-            <div className="input-field">
-                <input
-                    id="sum"
-                    type="number"
-                    name="sum"
-                    placeholder={account.sum}
-                    onChange={changeHandler}
-                    min="0"
-                />
-                
-                <label htmlFor="sum">Текущий остаток на счёте</label>
-            </div>
-
-            <div className="card-action">
-                    <button
-                        className="btn grey lighten-1 black-text"
-                        type="button"
-                        onClick={createHandler}
-                    >
-                        Создать
-                    </button>
-            </div>
-        </>
-        
-    ) */
 }
 

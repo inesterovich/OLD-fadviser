@@ -105,7 +105,7 @@ export const CreateOperation = () => {
         window.M.FormSelect.init(select, {});
         }
     
-    const trigger = <Button> Новая операция </Button>
+    const trigger = <Button className="btn-small blue darken-1"> Новая операция </Button>
    const submit = <Button className="btn grey lighten-1 black-text " onClick={createHandler} >Сохранить</Button>;
     const cancelButton = <Button id="closeCreateOperation" modal="close" className="btn grey lighten-1 black-text">Отмена</Button>;
     
