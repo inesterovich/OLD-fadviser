@@ -24,6 +24,8 @@ nav .brand-logo {
   max-height: 60px;
   margin-left: 3rem;
   margin-top: 0.2rem;
+  left: 0%;
+  transform: translateX(0%); 
 }
 
 nav ul {
@@ -31,6 +33,19 @@ nav ul {
   margin-right: 3rem;
 }
 
+.dropdown-content {
+  top: 65px !important;
+  width: 130px !important;
+}
+
+.dropdown-content li.disabled {
+  padding-left: 16px;
+  padding-top: 14px;
+}
+
+.dropdown-content li.disabled {
+  pointer-events: none;
+}
 
 .promo-section {
   background-image: url('./assets/promo-image.jpg');
@@ -43,7 +58,7 @@ nav ul {
 .promo-wrapper {
   width: 50%;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: 4rem 1rem;
   border-radius: 25px;
 }
 
@@ -158,5 +173,35 @@ a.disabled {
 
 .aside-nav .valign-wrapper li {
   width: 100%;
+}
+
+
+@media (max-width: 992px) {
+
+  .promo-wrapper {
+    width: 65%;
+  }
+
+  .promo-wrapper img {
+    max-height: 8rem;
+  }
+
+  .promo-section p {
+    font-size: 1.4rem;
+    
+  }
+}
+
+
+@media (max-width: 600px) {
+
+
+  .promo-wrapper {
+    width: 85%;
+   
+  }
+
+
+
 }
 

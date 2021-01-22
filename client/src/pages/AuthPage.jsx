@@ -32,7 +32,7 @@ export const AuthPage = () => {
 
                     <div className="row ">
                         
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
                             <div className="card">
                                 <div className="card-image">
                                     <img src={budgetingImage} alt="Finance accounting" />
@@ -47,7 +47,7 @@ export const AuthPage = () => {
                             
                         </div>
 
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
 
                         <div className="card">
                                 <div className="card-image">
@@ -65,7 +65,7 @@ export const AuthPage = () => {
                             
                         </div>
 
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
                             
                             <div className="card">
                                 <div className="card-image">
@@ -81,7 +81,7 @@ export const AuthPage = () => {
 
                         </div>
 
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
                             <div className="card">
                                 <div className="card-image">
                                     <img src={financialCapImage} alt="Finance cap calculator" />
@@ -94,7 +94,7 @@ export const AuthPage = () => {
                             </div>
                         </div>
 
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
                             <div className="card">
                                 <div className="card-image">
                                     <img src={timeMoneyImage} alt="Money-life converter" />
@@ -111,7 +111,7 @@ export const AuthPage = () => {
                             
                         </div>
 
-                        <div className="col s4">
+                        <div className="col l4 m6 s12">
                             <div className="card">
                                 <div className="card-image">
                                     <img src={reportImage} alt="Reports" />

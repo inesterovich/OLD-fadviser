@@ -53,10 +53,18 @@ useEffect(() => {
   ]
   
   const location = useLocation();
+
+  const dropDownHandler = () => {
+    const menu = document.getElementById('topNav');
+    const elements = menu.querySelectorAll('.dropdown-trigger');
+    window.M.Dropdown.init(elements, {});
+    
+    
+  }
   
   if (isAuthenticated) {
     return (
-      <nav>
+      <nav id="topNav" >
       <div className="nav-wrapper white">
       <img className="brand-logo" src={logoIcon} alt="Fadviser"/>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
@@ -96,26 +104,41 @@ useEffect(() => {
     )
   }
 
-  // А у меня при регистрации NavLink вообще не будет. Разве что линки без шпионства
-  // Регистрация и войти - это компоненты
+  // Никакого sideNav. Делаем dropdowm
 
   return (
-    <nav>
-      <div className="nav-wrapper white">
-      <img className="brand-logo" src={logoIcon} alt="Fadviser"/>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+
+    <>
+       <ul id="dropdown-menu" className="dropdown-content center-align">
           <li className="grey-text text-lighten-1 disabled">О платформе</li>
           <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
             </li>
           <li><Register /></li>
-          <li><Login/></li>
-         
-               
-               
+          <li><Login /></li>
+        
       </ul>
+
+
+
+    <nav id="topNav" onLoad={dropDownHandler}>
+        <div className="nav-wrapper white">
+          
+      <img className="brand-logo" src={logoIcon} alt="Fadviser"/>
+        <ul id="nav-large" className="right hide-on-med-and-down">
+          <li className="grey-text text-lighten-1 disabled">О платформе</li>
+          <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
+            </li>
+          <li><Register /></li>
+          <li><Login /></li>
+         
+          </ul>
+          
+          <ul className="right hide-on-large-only">
+          <li className="show-on-medium-and-down"><a id="dropdown1" className="dropdown-trigger grey-text text-darken-1 " href="#!" data-target="dropdown-menu">МЕНЮ<i className="material-icons right grey-text">arrow_drop_down</i></a></li>
+          </ul>
     </div>
   </nav>
-
+    </>
   )
 
 

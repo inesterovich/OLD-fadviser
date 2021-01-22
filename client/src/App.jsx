@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'materialize-css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useRoutes } from './routes.jsx';
@@ -23,26 +23,22 @@ function App() {
     return < Loader />
   }
   
-
-  // Можно делать нормально aside меню компонент и сюда сегод забирать
-  
-  
   return (
     <AuthContext.Provider value={{
       token, login, logout, userId, isAuthenticated
     }}>
 
       <Router>
-        <header className="header">
+        <header className="header center-align">
            <Navbar />
         </header>
-      <main className=" main "> 
+      <main className="main"> 
           {isAuthenticated &&
             <div className=" center-align row">
-            <aside className="col s3">
+            <aside className="col l3 s3">
               <SideNav />
             </aside>
-            <section id="module-section" className="col offset-s1 s7">
+            <section id="module-section" className="col offset-s1 l7 s7">
               {routes}
             </section>
           </div>}
@@ -50,7 +46,10 @@ function App() {
         </main>
 
         <footer className="footer">
+          {
+            // Сюда надо вставить футер. На проверку - свои данные. В прод - авторское право
 
+          }
         </footer>
       </Router>
       </AuthContext.Provider>
