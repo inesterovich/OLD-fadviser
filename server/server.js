@@ -1,10 +1,20 @@
+const fs = require('fs');
+const path = require('path');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
-
-const server = express();
+const logger = require('morgan');
 
 const PORT = config.get('port') || 5000;
+
+
+const server = express();
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), {
+    flags: 'a'
+})
+
+server.use(logger('combined', {stream: accessLogStream}));
 
 server.use(express.json({ extended: true }));
 
