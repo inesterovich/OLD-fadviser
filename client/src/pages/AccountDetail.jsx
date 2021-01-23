@@ -55,9 +55,26 @@ export const AccountDetail = () => {
                                     <td>{index + 1 }</td>
                                     <td>{new Date(operation.date).toLocaleDateString() }</td>
                                     <td>{operation.category}</td>
-                                    <td className="green-text text-darken-3">{operation.sum > 0 ? operation.sum.toFixed(2): '' }</td>
-                                    <td className="red-text text-darken-3">{operation.sum < 0 ? operation.sum.toFixed(2): '' }</td>
-                                    <td>{index === 0 ? accumulator.toFixed(2) : (accumulator += operation.sum).toFixed(2)
+                                    <td className="green-text text-darken-3">
+                                        {
+                                        operation.sum > 0
+                                            ? Number(operation.sum.toFixed(2)).toLocaleString()
+                                            + ' ₽'
+                                            : ''
+                                        }
+                                    </td>
+                                    <td className="red-text text-darken-3">
+                                        {
+                                            operation.sum < 0
+                                            ? Number(operation.sum.toFixed(2)).toLocaleString() + ' ₽'
+                                            : ''
+                                        }
+                                    </td>
+                                    <td>
+                                        {
+                                            index === 0
+                                            ? Number(accumulator.toFixed(2)).toLocaleString() + ' ₽'
+                                            : Number((accumulator += operation.sum).toFixed(2)).toLocaleString() + ' ₽'
                                     }</td>
                                     <td> 
                                             <EditOperation

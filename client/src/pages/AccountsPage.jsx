@@ -15,7 +15,7 @@ export const AccountsPage = () => {
    const {loading, request } = useHttp();
     const { token } = useContext(AuthContext);
     
-    const [categories, setCategories] = useState();
+    const [, setCategories] = useState();
     
     
 
