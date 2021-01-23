@@ -4,6 +4,8 @@ import { Modal, Button } from 'react-materialize';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
+import successSound from '../assets/sounds/success.mp3';
+import errorSound from '../assets/sounds/error.mp3'
 
 export const Login = () => {
     const {login} = useContext(AuthContext);
@@ -17,7 +19,16 @@ export const Login = () => {
 
     useEffect(() => {
         message(error);
+        const sound = new Audio(errorSound);
+
+        if (error) {
+            sound.play();
+        } 
         clearError();
+        
+        
+        
+        
 
      }, [error, message, clearError]);
 
@@ -28,11 +39,15 @@ export const Login = () => {
     const loginHandler = async () => {
         try {
             const data = await request('/api/auth/login', 'POST', { ...form });
-            login(data.token, data.userId);
+            
 
             if (data) {
                 const closeModal = document.getElementById('closeLogin');
+                const sound = new Audio(successSound);
+                sound.play();
+                login(data.token, data.userId);
                 closeModal.click();
+                
             }
         } catch (error) {}
     }
@@ -43,7 +58,7 @@ export const Login = () => {
 
     const trigger = <a href="/" onClick={(event) => event.preventDefault()} className="grey-text text-darken-1" > Войти </a>
 
-    const submit = <Button modal="close" className="btn grey lighten-1 black-text" onClick={loginHandler} disabled={loading} >Отправить</Button>;
+    const submit = <Button className="btn grey lighten-1 black-text" onClick={loginHandler} disabled={loading} >Отправить</Button>;
     const cancelButton = <Button id="closeLogin"  modal="close"  className="btn grey lighten-1 black-text">Отмена</Button>;
    
 

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Button as a } from 'react-materialize';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { Link } from 'react-scroll';
@@ -131,8 +132,12 @@ useEffect(() => {
           <li className="grey-text text-lighten-1 disabled">О платформе</li>
           <li><Link to="opportunity-section-header"  className="grey-text text-darken-1" activeClass="active" spy={true} smooth={true}>Возможности</Link>
             </li>
-          <li><Register /></li>
-          <li><Login /></li>
+          <li><a
+                 className="grey-text text-darken-1 modal-trigger" href="#registerModal"               
+                >Регистрация</a></li>
+          <li><a
+                className="grey-text text-darken-1 modal-trigger" href="#loginModal"
+                >Войти</a></li>
           
           </>
         }

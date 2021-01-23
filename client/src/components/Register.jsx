@@ -2,6 +2,8 @@ import React, { useEffect, useState }  from 'react';
 import { Modal, Button } from 'react-materialize';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
+import successSound from '../assets/sounds/success.mp3';
+import errorSound from '../assets/sounds/error.mp3'
 
 
 export const Register = () => {
@@ -16,9 +18,17 @@ export const Register = () => {
 
     useEffect(() => {
         message(error);
+        const sound = new Audio(errorSound);
+
+        if (error) {
+            sound.play();
+        }
+        
         clearError();
 
     }, [error, message, clearError]);
+
+    
     
    
 
@@ -31,9 +41,13 @@ export const Register = () => {
             const data = await request('/api/auth/register', 'POST', { ...form });
             message(data.message);
 
+
             if (data) {
                 const closeModal = document.getElementById('closeRegister');
                 closeModal.click();
+                const sound = new Audio(successSound);
+                sound.play();
+               
             }
             
         } catch (error) {}
