@@ -57,7 +57,7 @@ export const CreateAccount = () => {
     
 
     return (
-        <Modal header="Создать аккаунт" trigger={trigger} actions={[
+        <Modal header="Создать счёт" trigger={trigger} actions={[
          
             submit, cancelButton
           ]}>

@@ -13,6 +13,3 @@ const CategorySchema = new Schema({
 
 module.exports = CategorySchema;
 
-// А вот список категорий юзеру не надо? По идее надо бы. 
-
-// Хорош пыхтеть. Делаем по частям. 

@@ -35,7 +35,7 @@ const UserSchema = new Schema({
 UserSchema.methods.setDefaultCategories = function () {
     // this === user
 
-    console.log(this)
+   
 
     const incomeCategories = ['Зарплата', 'Подработки', 'Подарки', 'Инвестиции'];
     const expensesCategories = ['Фонд богатства', 'Текущие расходы', 'Долгосрочные накопления', 'Здоровье', 'Образование', 'Развлечения', 'Благотворительность'];

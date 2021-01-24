@@ -25,12 +25,15 @@ AccountSchema.methods.sortOperations = function () {
     // Сортирую поле this.operations по основанию date
 
     try {
+        // Условие на длину операции > 1 
+        if (this.operations.length > 1) {
 
-        const croppedArray = this.operations.slice(1).sort((a, b) => a.date > b.date ? 1 : -1)
+            const croppedArray = this.operations.slice(1).sort((a, b) => a.date > b.date ? 1 : -1)
     
-        this.operations = [this.operations[0], ...croppedArray];
-
-        // return this;
+            this.operations = [this.operations[0], ...croppedArray];
+    
+        }
+       
       
     } catch (error) {
         error.message = `Error was catched in sorting method hook, Message: ${error.message}`;
@@ -43,21 +46,28 @@ AccountSchema.methods.sortOperations = function () {
 }
 
 AccountSchema.methods.updateDate = function (editedOperaation) {
-    
 
-    if (this.operations[0].date >= this.operations[1].date) {
+    // Вот где косяк. Надо предусмотреть крайний случай, что дату первой операции менять вообще можно. 
+    if (this.operations.length > 1) {
 
-        this.operations[0].date = new Date(this.operations[1].date - 1)
-        
-        
-            if (String(editedOperaation._id) === String(this.operations[0]._id)) {
 
-                throw new Error('Операция запрещена: дата создания счёта не может быть больше следующей операции.')
-            } 
+        if (this.operations[0].date >= this.operations[1].date) {
 
+            this.operations[0].date = new Date(this.operations[1].date - 1)
             
-        }
+            
+                if (String(editedOperaation._id) === String(this.operations[0]._id)) {
     
+                    throw new Error('Операция запрещена: дата создания счёта не может быть больше следующей операции.')
+                } 
+    
+                
+            }
+        
+    }
+    
+
+  
         
   
     
