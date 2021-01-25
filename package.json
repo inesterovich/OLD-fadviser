@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "preinstall" : "node index.js",
+    "install:build": "npm install && npm run client:build",
     "start": "cross-env NODE_ENV=production node server.js",
     "server": "nodemon server.js",
     "client": "npm run start --prefix client",
