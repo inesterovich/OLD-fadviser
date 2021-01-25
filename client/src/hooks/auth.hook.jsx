@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
 const storageName = 'userData';
+const accountsData = 'accountsData';
 
 export const useAuth = () => {
     const [token, setToken] = useState(null);
@@ -20,6 +21,7 @@ export const useAuth = () => {
         setToken(null);
         setUserId(null);
         localStorage.removeItem(storageName);
+        localStorage.removeItem(accountsData);
      }, []);
 
 
