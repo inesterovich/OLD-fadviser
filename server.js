@@ -1,9 +1,18 @@
+const fs = require('fs');
 const express = require('express');
 const config = require('config');
 const path = require('path');
 const mongoose = require('mongoose');
+const logger = require('morgan');
 
 const server = express();
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), {
+    flags: 'a'
+})
+
+server.use(logger('combined', {stream: accessLogStream}));
+
+
 server.use(express.json({ extended: true }));
 
 server.use('/api/auth', require('./routes/auth.routes'));
