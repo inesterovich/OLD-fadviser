@@ -82,7 +82,8 @@ export const AccountDetail = () => {
                                             date={new Date(operation.date).toString()}
                                             category={operation.category}
                                             sum={operation.sum}
-                                            categoryId = {index+1}
+                                            categoryId={index + 1}
+                                            type = {operation.sum > 0 ? true : false}
                                             />
 </td>
                                     <td>

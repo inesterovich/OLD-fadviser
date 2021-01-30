@@ -9,9 +9,9 @@ import {ReactComponent as EditIcon} from '../assets/edit-black.svg';
 
 
 
-export const EditOperation = ({ operationId, date, category, sum,  categoryId }) => {
+export const EditOperation = ({ operationId, date, category, sum,  categoryId, type }) => {
     
-  
+   
 
  
     const { storage } = utils;
@@ -20,7 +20,8 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId })
     const accountId = useParams().id;
     const { token } = useContext(AuthContext);
     const { request, error, clearError } = useHttp();
-    const [operationType, setOperationType] = useState(true);
+    const [operationType, setOperationType] = useState(type);
+ 
     const [validity, setValidity] = useState(true);
 
     const message = useMessage();
@@ -39,21 +40,60 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId })
     })
 
 
-    const changeHandler =  useCallback(event => {
+    const changeHandler = useCallback(event => {
+        
+        // Вот здесь мне надо что-то дописать 
+        /*  Что именно мне нужно тут сделать? 
+        
+        */
+      
        
         if (event.target.type === 'select-one') {
             let type = event.target.selectedOptions[0].dataset.operationtype;
 
             type === 'income' ? type = true : type = false;
             setOperationType(type);
+
+       
+            
+         
+           
     
         }
-    
-        setOperation({...operation, [event.target.name]:
+     
+        setOperation({
+            ...operation,
+            [event.target.name]:
             event.target.type === 'number' ?
                 Number(event.target.value)
-                : event.target.value})
+                : event.target.value
+        
+        })
     }, [operation])
+
+    useEffect(() => {
+        if (operationType) {
+            
+            if (operation.sum < 0) {
+                setOperation({
+                    date: operation.date,
+                    sum: -operation.sum,
+                    category: operation.category
+                })
+            }
+        } else {
+
+            if (operation.sum > 0) {
+
+                setOperation({
+                    date: operation.date,
+                    sum: -operation.sum,
+                    category: operation.category
+                })
+            }
+        }
+
+    }, [operationType, operation])
 
     
     
@@ -121,7 +161,7 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId })
     const submit = <Button className="btn grey lighten-1 black-text " onClick={updateHandler} >Сохранить</Button>;
     const cancelButton = <Button modal="close"  id={`closeEditOperation${operationId}`}  className="btn grey lighten-1 black-text">Отмена</Button>;
 
-// Обычный инпут type text при изменении первой операциии?
+
     
 
     return (
@@ -243,12 +283,12 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId })
                 {
                     categoryId !== 1 &&
 
-                    <select name="category" onChange={changeHandler} value={storage.get('accountsData').categories.income[0].name} required>
+                    <select name="category" onChange={changeHandler} defaultValue={operation.category} required>
                     <optgroup label="Доходы">
                         {
                             storage.get('accountsData').categories.income.map((object, index) => {
                             return (
-                                <option key={object._id} value={object.name}
+                                <option key={object._id} value={object.name} 
                                 data-operationtype="income"
                                 >{object.name}</option>
                             )

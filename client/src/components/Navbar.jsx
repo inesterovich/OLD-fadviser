@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import { Button as a } from 'react-materialize';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { Link } from 'react-scroll';
 import { Register } from './Register.jsx';
 import { Login } from './Login.jsx';
-import logoIcon from '../assets/fadviser_small.svg'
+import logoIcon from '../assets/fadviser_small.svg';
+import {ReactComponent as ArrowIcon } from '../assets/arrow_drop_down.svg';
 
 
 export const Navbar = () => {
@@ -264,7 +264,7 @@ useEffect(() => {
           </ul>
           
           <ul className="right hide-on-large-only">
-          <li className="show-on-medium-and-down"><a id="dropdown1" className="dropdown-trigger grey-text text-darken-1 " href="#!" data-target="dropdown-menu">МЕНЮ<i className="material-icons right grey-text">arrow_drop_down</i></a></li>
+          <li className="show-on-medium-and-down"><a id="dropdown1" className="dropdown-trigger grey-text text-darken-1 " href="#!" data-target="dropdown-menu">МЕНЮ <ArrowIcon className="arrow_drop_down" /></a></li>
           </ul>
     </div>
   </nav>
