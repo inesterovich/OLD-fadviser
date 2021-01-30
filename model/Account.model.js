@@ -1,8 +1,8 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema } = require('mongoose');
 const OperationSchema = require('./Operation.model');
 
 
-// Сюда не помешает дату создания
+
 const AccountSchema = new Schema({
 
     name: {
@@ -22,10 +22,10 @@ const AccountSchema = new Schema({
 })
 
 AccountSchema.methods.sortOperations = function () {
-    // Сортирую поле this.operations по основанию date
+
 
     try {
-        // Условие на длину операции > 1 
+        
         if (this.operations.length > 1) {
 
             const croppedArray = this.operations.slice(1).sort((a, b) => a.date > b.date ? 1 : -1)
@@ -47,7 +47,7 @@ AccountSchema.methods.sortOperations = function () {
 
 AccountSchema.methods.updateDate = function (editedOperaation) {
 
-    // Вот где косяк. Надо предусмотреть крайний случай, что дату первой операции менять вообще можно. 
+   
     if (this.operations.length > 1) {
 
 
@@ -66,22 +66,10 @@ AccountSchema.methods.updateDate = function (editedOperaation) {
         
     }
     
-
-  
-        
-  
-    
-   
-
-    /*  
-    При такой логике оно само собой не ломается, но лучше бы предупредить юзера, что "это нельзя делать". Мне, по сути, нужно передавать редактируемую операцию
-
-    Если дата новой операции больше даты следующей операции и это начальная операция - выдать ответ: Операция запрещена
-    */
 }
 
 AccountSchema.methods.updateSum = function () {
-    // Через map и reduce делаю всё это
+  
    this.sum = this.operations.map((item) => item = item.sum).reduce((sum, current) => sum + current, 0);
 }
 

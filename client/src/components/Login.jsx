@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState }  from 'react';
-// eslint-disable-next-line no-unused-vars
 import { Modal, Button } from 'react-materialize';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';

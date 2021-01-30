@@ -119,8 +119,7 @@ router.post('/accounts/:id', auth, async (req, res) => {
                 break;
             
             case 'edit operation':
-                console.log(req.body);
-
+                
                 const updateIndex = currentAccount.operations.findIndex((operation) => String(operation._id) === operationId);
             
                 const newOperation = new OperationModel({ date, category, sum, _id: operationId });

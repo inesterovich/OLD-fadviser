@@ -1,5 +1,4 @@
 import React  from 'react';
-// eslint-disable-next-line no-unused-vars
 import { Modal, Button } from 'react-materialize';
 
 
@@ -22,4 +21,3 @@ export const ModalCustom = ({ data }) => {
 
 
 
-// Я всё-таки хотел бы внутрь одной функции всё это обернуть. Там и поиграть можно будет с контентом

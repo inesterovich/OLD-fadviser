@@ -8,10 +8,6 @@ import reportImage from '../assets/report.jpg'
 
 
 export const DashboardPage = () => {
-    // Тут можно все даннные вынести в переменные, и описать одну ссылку. Дальше перебором массив загрузить всё в див
-
-    // Здесь нужен обработчик активных ссылок. Кликаем тут, ставим класс на ссылку
-
     
     return (
         <div className=" dashboard row ">

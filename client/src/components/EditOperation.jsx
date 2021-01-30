@@ -42,10 +42,7 @@ export const EditOperation = ({ operationId, date, category, sum,  categoryId, t
 
     const changeHandler = useCallback(event => {
         
-        // Вот здесь мне надо что-то дописать 
-        /*  Что именно мне нужно тут сделать? 
-        
-        */
+      
       
        
         if (event.target.type === 'select-one') {
