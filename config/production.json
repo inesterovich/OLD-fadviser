@@ -1,5 +1,5 @@
 {
-    "port": 80,
+    "port": 65001,
     "jwtSecret": "IlyaInvestGrape",
     "mongoUri": "mongodb+srv://inesterovich:1928374650@cluster0.dche1.mongodb.net/app?retryWrites=true&w=majority",
     "baseUrl": "http://fadviser.ru"
